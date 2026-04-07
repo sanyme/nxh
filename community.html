@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <title>NXH | المجتمع</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; background-color: #050505; color: #fff; transition: all 0.3s ease; }
+        .glass { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <nav data-aos="fade-down" class="sticky top-0 z-50 glass px-8 py-4 m-4 rounded-3xl flex justify-between items-center shadow-2xl">
+        <div class="flex items-center gap-8 md:gap-12">
+            <a href="index.html" class="text-4xl font-black text-cyan-400 tracking-tighter" style="text-shadow: 0 0 15px #06b6d4;">NXH</a>
+            <div class="hidden md:flex gap-8 text-sm font-bold text-gray-400">
+                <a href="index.html" data-i18n="nav_home" class="hover:text-cyan-400 transition pb-1">الرئيسية</a>
+                <a href="store.html" data-i18n="nav_store" class="hover:text-cyan-400 transition pb-1">المتجر</a>
+                <a href="community.html" data-i18n="nav_community" class="text-cyan-400 border-b-2 border-cyan-400 pb-1">المجتمع</a>
+                <a href="support.html" data-i18n="nav_support" class="hover:text-cyan-400 transition pb-1">الدعم</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <button id="lang-btn" class="text-gray-400 hover:text-white transition font-black text-sm flex items-center gap-2">🌐 EN</button>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex flex-col items-center justify-center text-center px-6 py-20 relative">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#5865F2]/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div data-aos="fade-up" class="text-8xl mb-8">🎮</div>
+        <h2 data-aos="fade-up" data-aos-delay="100" data-i18n="comm_title" class="text-6xl md:text-7xl font-black mb-6 tracking-tighter">عائلة <span class="text-[#5865F2]">NXH</span></h2>
+        <p data-aos="fade-up" data-aos-delay="200" data-i18n="comm_desc" class="text-gray-400 mb-12 text-lg max-w-2xl">المقر الرسمي للمطورين واللاعبين. انضم الآن وكن جزءاً من المناقشات التقنية.</p>
+        
+        <a data-aos="zoom-in" data-aos-delay="300" href="https://discord.gg/886spEJ6" target="_blank" class="bg-[#5865F2] text-white px-12 py-5 rounded-2xl font-black text-lg hover:bg-[#4752C4] hover:scale-105 transition duration-300 shadow-[0_0_30px_rgba(88,101,242,0.3)] flex items-center gap-3">
+            <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" class="w-6 h-6 filter brightness-0 invert" alt="Discord">
+            <span data-i18n="comm_btn">دخول السيرفر</span>
+        </a>
+    </main>
+
+    <footer data-i18n="footer" class="border-t border-white/5 text-center py-10 text-gray-600 text-xs font-bold tracking-[0.2em] uppercase">NXH ECOSYSTEM &copy; 2026</footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, once: true });</script>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>NXH | تسجيل الدخول</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; background-color: #050505; color: #fff; }
+        .login-card { background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
+        .social-btn { transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 15px; font-weight: 800; font-size: 0.9rem; }
+        .social-btn:hover { transform: scale(1.02); filter: brightness(1.1); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+    <div class="login-card p-10 rounded-[2.5rem] w-full max-w-md text-center shadow-2xl">
+        <div class="mb-10">
+            <h1 class="text-4xl font-black text-white tracking-tighter">NXH <span class="bg-cyan-500 text-black px-2 rounded-lg">ID</span></h1>
+            <p class="text-gray-500 mt-2 text-xs italic tracking-widest uppercase">Select Entry Point</p>
+        </div>
+
+        <div class="flex flex-col gap-4">
+            <a href="#" class="social-btn bg-[#5865F2] text-white py-4 rounded-2xl">
+                <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" class="w-6 h-6 filter brightness-0 invert" alt="Discord">
+                Login with Discord
+            </a>
+
+            <a href="#" class="social-btn bg-white text-black py-4 rounded-2xl">
+                <img src="https://www.svgrepo.com/show/355037/google-icon.svg" class="w-6 h-6" alt="Google">
+                Sign in with Google
+            </a>
+
+            <a href="#" class="social-btn bg-[#24292e] text-white py-4 rounded-2xl border border-white/10">
+                <img src="https://www.svgrepo.com/show/35001/github.svg" class="w-6 h-6 filter brightness-0 invert" alt="GitHub">
+                Login with GitHub
+            </a>
+        </div>
+
+        <div class="mt-12 pt-6 border-t border-white/5">
+            <a href="index.html" class="text-cyan-500 hover:text-white transition text-sm font-bold">العودة للرئيسية</a>
+        </div>
+    </div>
+
+</body>
+</html>

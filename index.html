@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NXH | الرئيسية</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; transition: all 0.3s ease; }
+        .glass { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.05); }
+        .neon-text { text-shadow: 0 0 15px #06b6d4; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #06b6d4; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <nav data-aos="fade-down" data-aos-duration="1000" class="sticky top-0 z-50 glass px-8 py-4 m-4 rounded-3xl flex justify-between items-center shadow-2xl">
+        <div class="flex items-center gap-8 md:gap-12">
+            <a href="index.html" class="text-4xl font-black text-cyan-400 tracking-tighter hover:scale-105 transition neon-text">NXH</a>
+            <div class="hidden md:flex gap-8 text-sm font-bold text-gray-400">
+                <a href="index.html" data-i18n="nav_home" class="text-cyan-400 border-b-2 border-cyan-400 pb-1">الرئيسية</a>
+                <a href="store.html" data-i18n="nav_store" class="hover:text-cyan-400 transition pb-1">المتجر</a>
+                <a href="community.html" data-i18n="nav_community" class="hover:text-cyan-400 transition pb-1">المجتمع</a>
+                <a href="support.html" data-i18n="nav_support" class="hover:text-cyan-400 transition pb-1">الدعم</a>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <button id="lang-btn" class="text-gray-400 hover:text-white transition font-black text-sm flex items-center gap-2">
+                🌐 EN
+            </button>
+            
+            <a href="https://discord.gg/886spEJ6" target="_blank" class="hidden md:inline-block bg-cyan-500 text-black px-8 py-3 rounded-full font-black text-sm hover:bg-white transition shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+                JOIN US
+            </a>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex flex-col items-center justify-center text-center px-6 py-32 relative">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <span data-aos="fade-up" data-i18n="badge" class="px-5 py-1.5 mb-6 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-cyan-400 text-xs font-bold uppercase tracking-widest">
+            الجيل القادم من التقنية
+        </span>
+        
+        <h2 data-aos="fade-up" data-aos-delay="100" data-i18n="title" class="text-7xl md:text-9xl font-black text-white mb-6 tracking-tighter">
+            NEXORIA <span class="text-cyan-500">HUB</span>
+        </h2>
+        
+        <p data-aos="fade-up" data-aos-delay="200" data-i18n="desc" class="text-gray-400 text-xl md:text-2xl max-w-3xl mb-12 leading-relaxed">
+            المكان الأول للأتمتة، الألعاب، والتقنيات المستقبلية. مشروع ساني القادم الذي سيغير قواعد اللعبة.
+        </p>
+        
+        <div data-aos="fade-up" data-aos-delay="300" class="flex flex-wrap justify-center gap-6 z-10">
+            <a href="store.html" data-i18n="btn_store" class="bg-white text-black px-12 py-4 rounded-2xl font-black hover:bg-cyan-400 hover:scale-105 transition duration-300">
+                تصفح المتجر
+            </a>
+            <a href="login.html" data-i18n="btn_login" class="glass text-white px-12 py-4 rounded-2xl font-black hover:bg-white/10 hover:scale-105 transition duration-300">
+                تسجيل الدخول
+            </a>
+        </div>
+    </main>
+
+    <section class="max-w-7xl mx-auto px-6 py-32 w-full">
+        <h3 data-aos="fade-up" data-i18n="why_title" class="text-4xl font-black mb-16 border-b-4 border-cyan-500 inline-block pb-4">لماذا تختار NXH؟</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div data-aos="fade-up" data-aos-delay="100" class="glass p-10 rounded-[2.5rem] hover:border-cyan-500/50 transition duration-300">
+                <div class="text-5xl mb-6">⚡</div>
+                <h4 data-i18n="feat1_title" class="text-2xl font-bold mb-4 text-cyan-400">أداء فائق</h4>
+                <p data-i18n="feat1_desc" class="text-gray-400 leading-relaxed">برمجيات وأدوات محسنة لأقصى درجات السرعة دون أي تقطيع.</p>
+            </div>
+            
+            <div data-aos="fade-up" data-aos-delay="200" class="glass p-10 rounded-[2.5rem] hover:border-cyan-500/50 transition duration-300">
+                <div class="text-5xl mb-6">🛡️</div>
+                <h4 data-i18n="feat2_title" class="text-2xl font-bold mb-4 text-cyan-400">حماية متطورة</h4>
+                <p data-i18n="feat2_desc" class="text-gray-400 leading-relaxed">أنظمة أمان مدمجة وبروكسيات لحماية هويتك الرقمية بالكامل.</p>
+            </div>
+            
+            <div data-aos="fade-up" data-aos-delay="300" class="glass p-10 rounded-[2.5rem] hover:border-cyan-500/50 transition duration-300">
+                <div class="text-5xl mb-6">🎮</div>
+                <h4 data-i18n="feat3_title" class="text-2xl font-bold mb-4 text-cyan-400">مجتمع محترفين</h4>
+                <p data-i18n="feat3_desc" class="text-gray-400 leading-relaxed">تواصل مع لاعبين ومطورين محترفين وكن جزءاً من عائلتنا.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer data-i18n="footer" class="border-t border-white/5 text-center py-10 text-gray-600 text-xs font-bold tracking-[0.2em] mt-auto uppercase">
+        NXH ECOSYSTEM &copy; 2026 | BUILT & DESIGNED BY SANY
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 100 });</script>
+
+    <script src="main.js"></script>
+</body>
+</html>
