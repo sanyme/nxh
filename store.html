@@ -1,58 +1,55 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="html-tag">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NXH Store | المتجر</title>
+    <title>NXH | المتجر</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
-        body { font-family: 'Cairo', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; transition: all 0.3s ease; }
-        .glass { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #050505; } ::-webkit-scrollbar-thumb { background: #06b6d4; border-radius: 10px; }
+        body { font-family: 'Cairo', sans-serif; background: #050505; color: white; }
+        .neon { text-shadow: 0 0 15px rgba(6, 182, 212, 0.6); }
+        .glass { background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
 
-    <nav data-aos="fade-down" class="sticky top-0 z-50 glass px-8 py-4 m-4 rounded-3xl flex justify-between items-center shadow-2xl">
-        <div class="flex items-center gap-8 md:gap-12">
-            <a href="index.html" class="text-4xl font-black text-cyan-400 tracking-tighter hover:scale-105 transition" style="text-shadow: 0 0 15px #06b6d4;">NXH</a>
-            <div class="hidden md:flex gap-8 text-sm font-bold text-gray-400">
-                <a href="index.html" data-i18n="nav_home" class="hover:text-cyan-400 transition pb-1">الرئيسية</a>
-                <a href="store.html" data-i18n="nav_store" class="text-cyan-400 border-b-2 border-cyan-400 pb-1">المتجر</a>
-                <a href="community.html" data-i18n="nav_community" class="hover:text-cyan-400 transition pb-1">المجتمع</a>
-                <a href="support.html" data-i18n="nav_support" class="hover:text-cyan-400 transition pb-1">الدعم</a>
-            </div>
+    <nav class="glass fixed top-0 w-full z-50 px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-12">
+            <div class="text-3xl font-black neon text-cyan-500">NXH</div>
+            <ul class="hidden md:flex gap-8 text-sm font-bold text-gray-400 uppercase tracking-widest">
+                <li><a href="index.html" data-i18n="nav_home" class="hover:text-cyan-400 transition">Home</a></li>
+                <li><a href="store.html" data-i18n="nav_store" class="text-white border-b-2 border-cyan-500 pb-1">Store</a></li>
+                <li><a href="#" data-i18n="nav_community" class="hover:text-cyan-400 transition">Community</a></li>
+            </ul>
         </div>
-        <div class="flex items-center gap-4">
-            <button id="lang-btn" class="text-gray-400 hover:text-white transition font-black text-sm flex items-center gap-2">🌐 EN</button>
-            <a href="login.html" class="hidden md:inline-block bg-cyan-500 text-black px-8 py-3 rounded-full font-black text-sm hover:bg-white transition" data-i18n="btn_login">LOGIN</a>
+        <div id="auth-section" class="flex items-center gap-4">
+            <button id="lang-btn" class="bg-white/5 px-3 py-2 rounded-lg text-xs font-black">🌐 AR</button>
+            <a href="login.html" id="login-btn" data-i18n="btn_login" class="bg-cyan-500 text-black px-6 py-2 rounded-full font-black text-xs uppercase">Login</a>
         </div>
     </nav>
 
-    <main class="flex-grow flex items-center justify-center px-6">
-        <div data-aos="zoom-in" class="glass p-12 md:p-20 rounded-[3rem] text-center max-w-2xl border-cyan-500/10 shadow-[0_0_50px_rgba(6,182,212,0.05)]">
-            <div class="text-7xl mb-8 animate-pulse">📦</div>
-            <h2 data-i18n="store_title" class="text-4xl md:text-5xl font-black mb-6 uppercase tracking-tight text-white">قائمة <span class="text-cyan-500 text-glow">المنتجات</span></h2>
-            <p data-i18n="store_desc" class="text-gray-500 text-lg leading-relaxed italic">
-                نحن نعمل على تجهيز قائمة منتجات حصرية تليق بمجتمع نكسوريا. ترقبوا الإطلاق قريباً.
-            </p>
-            
-            <div class="mt-10 flex justify-center gap-4">
-                <div class="w-2 h-2 bg-cyan-500 rounded-full animate-bounce"></div>
-                <div class="w-2 h-2 bg-cyan-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                <div class="w-2 h-2 bg-cyan-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+    <div class="min-h-screen pt-32 text-center px-6">
+        <h1 class="text-5xl md:text-6xl font-black uppercase mb-4" data-i18n="store_title">Product <span class="text-cyan-500 neon">List</span></h1>
+        <p class="text-gray-500 mb-12" data-i18n="store_desc">Choose from the most powerful software</p>
+        
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-cyan-500 transition">
+                <div class="text-4xl mb-4">🤖</div>
+                <h3 class="text-xl font-bold mb-2">NXH Bot</h3>
+                <button class="w-full bg-white text-black py-3 rounded-xl font-black mt-4">Purchase</button>
+            </div>
+            <div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-cyan-500 transition">
+                <div class="text-4xl mb-4">🛡️</div>
+                <h3 class="text-xl font-bold mb-2">NXH VPN</h3>
+                <button class="w-full bg-white text-black py-3 rounded-xl font-black mt-4">Purchase</button>
             </div>
         </div>
-    </main>
+    </div>
 
-    <footer data-i18n="footer" class="border-t border-white/5 text-center py-10 text-gray-600 text-xs font-bold tracking-[0.2em] uppercase">
-        NXH ECOSYSTEM &copy; 2026 | BUILT & DESIGNED BY SANY
-    </footer>
+    <div id="settings-modal" class="fixed inset-0 bg-black/95 backdrop-blur-xl hidden z-[100] flex items-center justify-center p-6">
+        </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init({ duration: 800, once: true });</script>
-    <script src="main.js"></script>
+    <script src="main.js?v=sany"></script>
 </body>
 </html>

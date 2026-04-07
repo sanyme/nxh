@@ -1,103 +1,64 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="html-tag">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NXH | الرئيسية</title>
-    
+    <title>NXH | Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
-        body { font-family: 'Cairo', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; transition: all 0.3s ease; }
-        .glass { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.05); }
-        .neon-text { text-shadow: 0 0 15px #06b6d4; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #06b6d4; border-radius: 10px; }
+        body { font-family: 'Cairo', sans-serif; background: #050505; color: white; }
+        .neon { text-shadow: 0 0 15px #06b6d4; }
+        .glass { background: rgba(10,10,10,0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        #file-upload { display: none; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
-
-    <nav data-aos="fade-down" data-aos-duration="1000" class="sticky top-0 z-50 glass px-8 py-4 m-4 rounded-3xl flex justify-between items-center shadow-2xl">
-        <div class="flex items-center gap-8 md:gap-12">
-            <a href="index.html" class="text-4xl font-black text-cyan-400 tracking-tighter hover:scale-105 transition neon-text">NXH</a>
-            <div class="hidden md:flex gap-8 text-sm font-bold text-gray-400">
-                <a href="index.html" data-i18n="nav_home" class="text-cyan-400 border-b-2 border-cyan-400 pb-1">الرئيسية</a>
-                <a href="store.html" data-i18n="nav_store" class="hover:text-cyan-400 transition pb-1">المتجر</a>
-                <a href="community.html" data-i18n="nav_community" class="hover:text-cyan-400 transition pb-1">المجتمع</a>
-                <a href="support.html" data-i18n="nav_support" class="hover:text-cyan-400 transition pb-1">الدعم</a>
-            </div>
+<body>
+    <nav class="glass fixed top-0 w-full z-50 px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-12">
+            <div class="text-3xl font-black neon text-cyan-500 cursor-pointer" onclick="location.href='index.html'">NXH</div>
+            <ul class="hidden md:flex gap-8 text-sm font-bold text-gray-400 uppercase tracking-widest">
+                <li><a href="index.html" data-i18n="nav_home" class="text-white border-b-2 border-cyan-500 pb-1">Home</a></li>
+                <li><a href="store.html" data-i18n="nav_store" class="hover:text-cyan-400 transition">Store</a></li>
+                <li><a href="community.html" data-i18n="nav_community" class="hover:text-cyan-400 transition">Community</a></li>
+                <li><a href="support.html" data-i18n="nav_support" class="hover:text-cyan-400 transition">Support</a></li>
+            </ul>
         </div>
-        
-        <div class="flex items-center gap-4">
-            <button id="lang-btn" class="text-gray-400 hover:text-white transition font-black text-sm flex items-center gap-2">
-                🌐 EN
-            </button>
-            
-            <a href="https://discord.gg/886spEJ6" target="_blank" class="hidden md:inline-block bg-cyan-500 text-black px-8 py-3 rounded-full font-black text-sm hover:bg-white transition shadow-[0_0_20px_rgba(6,182,212,0.4)]">
-                JOIN US
-            </a>
+        <div id="auth-section" class="flex items-center gap-4 relative z-[60]">
+            <button id="lang-btn" class="bg-white/5 px-3 py-2 rounded-lg text-xs font-black hover:bg-white/10 transition">🌐 AR</button>
+            <a href="login.html" id="login-btn" data-i18n="btn_login" class="bg-cyan-500 text-black px-6 py-2 rounded-full font-black text-xs uppercase hover:scale-105 transition">Login</a>
         </div>
     </nav>
 
-    <main class="flex-grow flex flex-col items-center justify-center text-center px-6 py-32 relative">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
-
-        <span data-aos="fade-up" data-i18n="badge" class="px-5 py-1.5 mb-6 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-cyan-400 text-xs font-bold uppercase tracking-widest">
-            الجيل القادم من التقنية
-        </span>
-        
-        <h2 data-aos="fade-up" data-aos-delay="100" data-i18n="title" class="text-7xl md:text-9xl font-black text-white mb-6 tracking-tighter">
-            NEXORIA <span class="text-cyan-500">HUB</span>
-        </h2>
-        
-        <p data-aos="fade-up" data-aos-delay="200" data-i18n="desc" class="text-gray-400 text-xl md:text-2xl max-w-3xl mb-12 leading-relaxed">
-            المكان الأول للأتمتة، الألعاب، والتقنيات المستقبلية. مشروع ساني القادم الذي سيغير قواعد اللعبة.
-        </p>
-        
-        <div data-aos="fade-up" data-aos-delay="300" class="flex flex-wrap justify-center gap-6 z-10">
-            <a href="store.html" data-i18n="btn_store" class="bg-white text-black px-12 py-4 rounded-2xl font-black hover:bg-cyan-400 hover:scale-105 transition duration-300">
-                تصفح المتجر
-            </a>
-            <a href="login.html" data-i18n="btn_login" class="glass text-white px-12 py-4 rounded-2xl font-black hover:bg-white/10 hover:scale-105 transition duration-300">
-                تسجيل الدخول
-            </a>
-        </div>
-    </main>
-
-    <section class="max-w-7xl mx-auto px-6 py-32 w-full">
-        <h3 data-aos="fade-up" data-i18n="why_title" class="text-4xl font-black mb-16 border-b-4 border-cyan-500 inline-block pb-4">لماذا تختار NXH؟</h3>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div data-aos="fade-up" data-aos-delay="100" class="glass p-10 rounded-[2.5rem] hover:border-cyan-500/50 transition duration-300">
-                <div class="text-5xl mb-6">⚡</div>
-                <h4 data-i18n="feat1_title" class="text-2xl font-bold mb-4 text-cyan-400">أداء فائق</h4>
-                <p data-i18n="feat1_desc" class="text-gray-400 leading-relaxed">برمجيات وأدوات محسنة لأقصى درجات السرعة دون أي تقطيع.</p>
-            </div>
-            
-            <div data-aos="fade-up" data-aos-delay="200" class="glass p-10 rounded-[2.5rem] hover:border-cyan-500/50 transition duration-300">
-                <div class="text-5xl mb-6">🛡️</div>
-                <h4 data-i18n="feat2_title" class="text-2xl font-bold mb-4 text-cyan-400">حماية متطورة</h4>
-                <p data-i18n="feat2_desc" class="text-gray-400 leading-relaxed">أنظمة أمان مدمجة وبروكسيات لحماية هويتك الرقمية بالكامل.</p>
-            </div>
-            
-            <div data-aos="fade-up" data-aos-delay="300" class="glass p-10 rounded-[2.5rem] hover:border-cyan-500/50 transition duration-300">
-                <div class="text-5xl mb-6">🎮</div>
-                <h4 data-i18n="feat3_title" class="text-2xl font-bold mb-4 text-cyan-400">مجتمع محترفين</h4>
-                <p data-i18n="feat3_desc" class="text-gray-400 leading-relaxed">تواصل مع لاعبين ومطورين محترفين وكن جزءاً من عائلتنا.</p>
-            </div>
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative z-10">
+        <h1 class="text-6xl md:text-8xl font-black uppercase mb-6" data-i18n="title">NEXORIA HUB</h1>
+        <div class="flex gap-4">
+            <a href="store.html" data-i18n="btn_store" class="bg-white text-black px-10 py-4 rounded-2xl font-black uppercase text-xs hover:bg-cyan-500 transition">Browse Store</a>
+            <a href="login.html" id="hero-login-btn" data-i18n="btn_login" class="bg-white/5 border border-white/10 px-10 py-4 rounded-2xl font-black uppercase text-xs hover:bg-white/10 transition">Login</a>
         </div>
     </section>
 
-    <footer data-i18n="footer" class="border-t border-white/5 text-center py-10 text-gray-600 text-xs font-bold tracking-[0.2em] mt-auto uppercase">
-        NXH ECOSYSTEM &copy; 2026 | BUILT & DESIGNED BY SANY
-    </footer>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 100 });</script>
-
+    <div id="settings-modal" class="fixed inset-0 bg-black/95 backdrop-blur-xl hidden z-[100] flex items-center justify-center p-6 text-right">
+        <div class="bg-[#0a0a0a] border border-white/10 p-8 rounded-[3rem] w-full max-w-md shadow-2xl relative">
+            <h2 class="text-3xl font-black neon uppercase italic text-center mb-8">Profile <span class="text-cyan-500">Settings</span></h2>
+            <div class="flex flex-col gap-6 items-center">
+                <div class="relative group cursor-pointer" onclick="document.getElementById('file-upload').click()">
+                    <img id="modal-preview" src="" class="w-24 h-24 rounded-full border-4 border-cyan-500 object-cover shadow-lg">
+                    <div class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition text-[10px] font-black uppercase">Change Photo</div>
+                </div>
+                <input type="file" id="file-upload" accept="image/*" onchange="previewFile()">
+                <div class="w-full">
+                    <label class="text-[10px] text-gray-500 font-black uppercase mr-2 tracking-widest">Display Name</label>
+                    <input type="text" id="edit-username" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-white outline-none focus:border-cyan-500 transition font-bold text-right">
+                    <input type="hidden" id="edit-avatar">
+                </div>
+                <div class="flex flex-col gap-3 w-full">
+                    <button onclick="saveProfile()" class="bg-cyan-500 text-black font-black py-4 rounded-2xl uppercase text-sm hover:scale-105 transition">Save Changes</button>
+                    <button onclick="toggleSettings()" class="text-gray-500 font-black text-xs uppercase text-center hover:text-white transition">Cancel</button>
+                    <button onclick="logout()" class="text-red-500/40 font-black text-[10px] uppercase text-center mt-4 hover:text-red-500 transition">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>
