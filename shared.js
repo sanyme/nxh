@@ -3,7 +3,7 @@
 //  Handles: Auth, i18n (AR/EN), Navbar, Profile Dropdown
 // ═══════════════════════════════════════════════════════════
 
-const BACKEND_URL  = 'https://nxh.onrender.com';
+const BACKEND_URL  = 'https://nxh.vercel.app';
 const FRONTEND_URL = 'https://sanyme.github.io/nxh';
 
 // ─── Translations ─────────────────────────────────────────
