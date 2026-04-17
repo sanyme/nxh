@@ -1,149 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nexoria Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Cairo:wght@400;700;900&display=swap');
-    
-    * { font-family: 'Inter', sans-serif; }
-    .glow-text { text-shadow: 0 0 40px rgba(0,200,224,0.4); }
-    .glow-btn  { box-shadow: 0 0 20px rgba(0,200,224,0.3); }
-    .card-hover {
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .card-hover:hover {
-      transform: translateY(-4px);
-      border-color: rgba(0,200,224,0.4);
-    }
-    /* Animated background dots */
-    body { background-color: #0a0a0a; }
-    .bg-grid {
-      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 32px 32px;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
 
-    /* Transition for language switching */
-    body, * { transition: font-family 0.3s ease; }
+    * { font-family: 'Inter', sans-serif; }
+    [dir="rtl"] * { font-family: 'Tajawal', sans-serif; }
+
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(0,200,224,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,224,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .glow-text { text-shadow: 0 0 40px rgba(0,200,224,0.4); }
+    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); }
+    .btn-cyan { background: #00c8e0; color: #000; font-weight: 700; transition: all 0.2s; }
+    .btn-cyan:hover { background: #00e5ff; transform: translateY(-1px); box-shadow: 0 0 20px rgba(0,200,224,0.4); }
+    .btn-outline { border: 1px solid rgba(255,255,255,0.3); color: #fff; font-weight: 700; transition: all 0.2s; }
+    .btn-outline:hover { border-color: #00c8e0; color: #00c8e0; }
+    .feature-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); transition: all 0.3s; }
+    .feature-card:hover { border-color: rgba(0,200,224,0.3); background: rgba(0,200,224,0.05); transform: translateY(-4px); }
+    .stat-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+    .delay-1 { animation-delay: 0.2s; opacity: 0; }
+    .delay-2 { animation-delay: 0.4s; opacity: 0; }
+    .delay-3 { animation-delay: 0.6s; opacity: 0; }
   </style>
 </head>
-<body class="bg-[#0a0a0a] text-white min-h-screen">
-  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-4 border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-sm">
-    <div class="text-[#00c8e0] font-bold text-lg tracking-widest border border-[#00c8e0]/30 bg-[#00c8e0]/10 px-3 py-1 rounded-md">NXH</div>
-    <ul class="flex gap-8 text-sm font-medium tracking-widest uppercase">
-      <li><a href="index.html" data-i18n="nav-home" class="text-white border-b-2 border-[#00c8e0] pb-0.5">Home</a></li>
-      <li><a href="store.html" data-i18n="nav-store" class="text-white/50 hover:text-white transition">Store</a></li>
-      <li><a href="community.html" data-i18n="nav-community" class="text-white/50 hover:text-white transition">Community</a></li>
-      <li><a href="support.html" data-i18n="nav-support" class="text-white/50 hover:text-white transition">Support</a></li>
-    </ul>
-    <div class="flex items-center gap-3">
-      <button id="langBtn" onclick="toggleLang()" class="text-xs text-white/50 border border-white/15 rounded-full px-3 py-1.5 hover:text-white transition cursor-pointer">AR</button>
-      <a href="login.html" data-i18n="nav-login" class="text-sm font-semibold bg-[#00c8e0] text-black px-5 py-2 rounded-full hover:bg-[#00b3c9] transition glow-btn">Login</a>
-    </div>
+<body class="bg-[#0a0a0a] text-white min-h-screen bg-grid">
+
+  <!-- NAVBAR -->
+  <nav id="mainNav" 
+       class="border-b border-white/10 px-8 py-4 flex items-center justify-between 
+              sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md">
   </nav>
 
-  <section class="bg-grid min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 relative overflow-hidden">
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-[#00c8e0]/5 blur-3xl pointer-events-none"></div>
-    
-    <div data-i18n="hero-badge" class="mb-6 text-xs font-semibold tracking-widest uppercase text-[#00c8e0] bg-[#00c8e0]/10 border border-[#00c8e0]/25 rounded-full px-4 py-1.5">
-      Gaming Hub — Est. 2024
-    </div>
-    
-    <h1 data-i18n="hero-title" class="text-7xl font-black tracking-tight leading-none mb-4 glow-text">
-      NEXORIA <span class="text-[#00c8e0]">HUB</span>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden md:hidden bg-[#0f0f0f] border-b border-white/10"></div>
+
+  <!-- HERO -->
+  <section class="flex flex-col items-center justify-center text-center px-4 pt-24 pb-16">
+    <div class="fade-in-up border border-[#00c8e0]/40 text-[#00c8e0] text-xs font-bold 
+                tracking-widest px-5 py-2 rounded-full mb-8"
+         data-i18n="hero_badge">GAMING HUB — EST. 2024</div>
+
+    <h1 class="fade-in-up delay-1 text-6xl md:text-8xl font-black tracking-tight mb-6 leading-none">
+      <span data-i18n="hero_title">NEXORIA</span>
+      <span class="text-[#00c8e0] glow-text" data-i18n="hero_title_accent"> HUB</span>
     </h1>
-    
-    <p data-i18n="hero-desc" class="text-white/40 text-base max-w-md leading-relaxed mb-10">
+
+    <p class="fade-in-up delay-2 text-white/50 text-lg max-w-md mb-10 leading-relaxed"
+       data-i18n="hero_desc">
       Your central hub for gaming tools, exclusive products, and a growing community.
     </p>
-    
-    <div class="flex gap-4">
-      <a href="store.html" data-i18n="btn-store" class="bg-[#00c8e0] text-black font-semibold text-sm px-7 py-3 rounded-lg hover:bg-[#00b3c9] transition glow-btn">Browse Store</a>
-      <a href="login.html" data-i18n="btn-login" class="border border-white/20 text-white/80 font-semibold text-sm px-7 py-3 rounded-lg hover:border-white/40 hover:text-white transition">Login</a>
+
+    <div class="fade-in-up delay-3 flex gap-4 flex-wrap justify-center mb-16">
+      <a href="store.html" class="btn-cyan px-8 py-3 rounded-lg text-base" 
+         data-i18n="hero_btn_store">Browse Store</a>
+      <a href="login.html" class="btn-outline px-8 py-3 rounded-lg text-base" 
+         id="heroLoginBtn" data-i18n="hero_btn_login">Login</a>
     </div>
-    
-    <div class="mt-16 flex divide-x divide-white/10 border border-white/10 rounded-xl overflow-hidden bg-white/[0.02] rtl:flex-row-reverse">
-      <div class="px-10 py-4 text-center">
-        <div class="text-xl font-bold text-white" id="membersCount">12K+</div>
-        <div data-i18n="stat-members" class="text-xs text-white/35 uppercase tracking-widest mt-1">Members</div>
+
+    <!-- STATS -->
+    <div class="grid grid-cols-3 gap-0 max-w-xl w-full stat-card rounded-2xl overflow-hidden">
+      <div class="px-8 py-6 border-r border-white/10 text-center">
+        <div class="text-2xl font-black text-white" id="membersCount">0</div>
+        <div class="text-xs text-white/40 tracking-widest mt-1" data-i18n="stat_members">MEMBERS</div>
       </div>
-      <div class="px-10 py-4 text-center">
-        <div class="text-xl font-bold text-white" id="productsCount">340+</div>
-        <div data-i18n="stat-products" class="text-xs text-white/35 uppercase tracking-widest mt-1">Products</div>
+      <div class="px-8 py-6 border-r border-white/10 text-center">
+        <div class="text-2xl font-black text-white" id="productsCount">0</div>
+        <div class="text-xs text-white/40 tracking-widest mt-1" data-i18n="stat_products">PRODUCTS</div>
       </div>
-      <div class="px-10 py-4 text-center">
-        <div class="text-xl font-bold text-white" id="uptimeCount">99%</div>
-        <div data-i18n="stat-uptime" class="text-xs text-white/35 uppercase tracking-widest mt-1">Uptime</div>
+      <div class="px-8 py-6 text-center">
+        <div class="text-2xl font-black text-white" id="uptimeCount">0%</div>
+        <div class="text-xs text-white/40 tracking-widest mt-1" data-i18n="stat_uptime">UPTIME</div>
       </div>
     </div>
   </section>
 
-  <section class="px-10 py-20 max-w-6xl mx-auto">
-    <h2 data-i18n="features-title" class="text-3xl font-bold text-center mb-12">Why <span class="text-[#00c8e0]">Nexoria?</span></h2>
+  <!-- FEATURES -->
+  <section class="px-8 py-16 max-w-6xl mx-auto">
+    <h2 class="text-center text-3xl font-black mb-2">
+      <span data-i18n="why_title">Why</span>
+      <span class="text-[#00c8e0]" data-i18n="why_accent"> Nexoria?</span>
+    </h2>
+    <p class="text-center text-white/40 mb-12" data-i18n="why_desc">Everything you need, in one place</p>
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="card-hover border border-white/10 bg-white/[0.03] rounded-xl p-6">
-        <div class="text-[#00c8e0] text-2xl mb-4">⚡</div>
-        <h3 class="font-semibold text-base mb-2">Instant Access</h3>
-        <p class="text-white/40 text-sm leading-relaxed">Get your products delivered instantly after purchase with no delays.</p>
+      <div class="feature-card rounded-2xl p-8">
+        <div class="text-4xl mb-4">🎮</div>
+        <h3 class="font-bold text-lg mb-2" data-i18n="feature_1_title">Gaming Tools</h3>
+        <p class="text-white/50 text-sm leading-relaxed" data-i18n="feature_1_desc">Premium tools and software for the competitive gamer.</p>
       </div>
-      <div class="card-hover border border-white/10 bg-white/[0.03] rounded-xl p-6">
-        <div class="text-[#00c8e0] text-2xl mb-4">🔒</div>
-        <h3 class="font-semibold text-base mb-2">Secure Login</h3>
-        <p class="text-white/40 text-sm leading-relaxed">Login with Discord, Google, or GitHub — fully OAuth secured.</p>
+      <div class="feature-card rounded-2xl p-8">
+        <div class="text-4xl mb-4">🏪</div>
+        <h3 class="font-bold text-lg mb-2" data-i18n="feature_2_title">Exclusive Store</h3>
+        <p class="text-white/50 text-sm leading-relaxed" data-i18n="feature_2_desc">340+ products available. From scripts to configs.</p>
       </div>
-      <div class="card-hover border border-white/10 bg-white/[0.03] rounded-xl p-6">
-        <div class="text-[#00c8e0] text-2xl mb-4">🎮</div>
-        <h3 class="font-semibold text-base mb-2">Gaming Community</h3>
-        <p class="text-white/40 text-sm leading-relaxed">Join thousands of gamers and connect with the community.</p>
+      <div class="feature-card rounded-2xl p-8">
+        <div class="text-4xl mb-4">👥</div>
+        <h3 class="font-bold text-lg mb-2" data-i18n="feature_3_title">Community</h3>
+        <p class="text-white/50 text-sm leading-relaxed" data-i18n="feature_3_desc">Join 12K+ members. Share, discuss, and grow.</p>
+      </div>
+      <div class="feature-card rounded-2xl p-8">
+        <div class="text-4xl mb-4">⚡</div>
+        <h3 class="font-bold text-lg mb-2" data-i18n="feature_4_title">99% Uptime</h3>
+        <p class="text-white/50 text-sm leading-relaxed" data-i18n="feature_4_desc">Reliable infrastructure. Always available.</p>
+      </div>
+      <div class="feature-card rounded-2xl p-8">
+        <div class="text-4xl mb-4">🔒</div>
+        <h3 class="font-bold text-lg mb-2" data-i18n="feature_5_title">Secure & Safe</h3>
+        <p class="text-white/50 text-sm leading-relaxed" data-i18n="feature_5_desc">End-to-end security for all transactions.</p>
+      </div>
+      <div class="feature-card rounded-2xl p-8">
+        <div class="text-4xl mb-4">🎧</div>
+        <h3 class="font-bold text-lg mb-2" data-i18n="feature_6_title">24/7 Support</h3>
+        <p class="text-white/50 text-sm leading-relaxed" data-i18n="feature_6_desc">Our support team is always online.</p>
       </div>
     </div>
   </section>
 
+  <!-- CTA -->
   <section class="px-8 py-16 max-w-4xl mx-auto">
-    <div class="bg-white/[0.04] border border-white/10 rounded-3xl p-12 text-center">
-      <h2 data-i18n="cta-title" class="text-4xl font-black mb-4">Ready to <span class="text-[#00c8e0]">Join?</span></h2>
-      <p data-i18n="cta-desc" class="text-white/50 mb-8">Create your free account and get instant access to everything Nexoria Hub has to offer.</p>
-      <a href="login.html" data-i18n="cta-btn" class="bg-[#00c8e0] text-black font-semibold text-sm px-10 py-3 rounded-lg hover:bg-[#00b3c9] transition glow-btn inline-block">Get Started Free</a>
+    <div class="glass rounded-3xl p-12 text-center">
+      <h2 class="text-4xl font-black mb-4">
+        <span data-i18n="cta_title">Ready to</span>
+        <span class="text-[#00c8e0]" data-i18n="cta_accent"> Join?</span>
+      </h2>
+      <p class="text-white/50 mb-8" data-i18n="cta_desc">Create your free account and get instant access.</p>
+      <a href="login.html" class="btn-cyan px-10 py-3 rounded-lg text-base inline-block"
+         data-i18n="cta_btn">Get Started Free</a>
     </div>
   </section>
 
-  <footer class="border-t border-white/10 px-10 py-6 flex items-center justify-between text-white/30 text-xs">
-    <span data-i18n="footer-rights">© 2024 Nexoria Hub. All rights reserved.</span>
-    <span class="text-[#00c8e0]/50">NXH</span>
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 px-8 py-6 flex items-center justify-between text-white/40 text-sm">
+    <span data-i18n="footer_rights">© 2024 Nexoria Hub. All rights reserved.</span>
+    <span class="text-[#00c8e0]/40 font-bold">NXH</span>
   </footer>
 
-  <script src="lang.js"></script>
-
+  <script src="shared.js"></script>
   <script>
-    function animateCounter(id, target, suffix = '') {
+    // Counter Animation
+    function animateCounter(id, target, format) {
       let current = 0;
-      const duration = 2000;
-      const step = target / (duration / 16);
+      const step = target / (2000 / 16);
       const el = document.getElementById(id);
-      if(!el) return;
       const timer = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          current = target;
-          clearInterval(timer);
-        }
-        el.textContent = Math.floor(current).toLocaleString() + suffix;
+        current = Math.min(current + step, target);
+        el.textContent = format(Math.floor(current));
+        if (current >= target) clearInterval(timer);
       }, 16);
     }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          animateCounter('membersCount', 12000, 'K+');
-          animateCounter('productsCount', 340, '+');
-          animateCounter('uptimeCount', 99, '%');
+          animateCounter('membersCount', 12, n => n + 'K+');
+          animateCounter('productsCount', 340, n => n + '+');
+          animateCounter('uptimeCount', 99, n => n + '%');
           observer.disconnect();
         }
       });
     });
-    if(document.getElementById('membersCount')) observer.observe(document.getElementById('membersCount'));
+    observer.observe(document.getElementById('membersCount'));
+
+    // Hide login btn if already logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = Auth.getUser();
+      const heroLoginBtn = document.getElementById('heroLoginBtn');
+      if (user && heroLoginBtn) {
+        heroLoginBtn.href = 'profile.html';
+        heroLoginBtn.setAttribute('data-i18n', 'nav_profile');
+        heroLoginBtn.textContent = i18n.t('nav_profile');
+      }
+    });
   </script>
+
 </body>
 </html>

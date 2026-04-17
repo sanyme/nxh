@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile — Nexoria Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+    * { font-family: 'Inter', sans-serif; }
+    [dir="rtl"] * { font-family: 'Tajawal', sans-serif; }
+
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(0,200,224,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,224,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+    .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; transition: all 0.2s; }
+    .input-field:focus { outline: none; border-color: #00c8e0; background: rgba(0,200,224,0.05); }
+    .input-field::placeholder { color: rgba(255,255,255,0.3); }
+    .input-field:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-cyan { background: #00c8e0; color: #000; font-weight: 700; transition: all 0.2s; }
+    .btn-cyan:hover { background: #00e5ff; box-shadow: 0 0 20px rgba(0,200,224,0.3); }
+    .avatar-wrapper { position: relative; display: inline-block; }
+    .avatar-wrapper:hover .avatar-overlay { opacity: 1; }
+    .avatar-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); border-radius: 50%; 
+                      display: flex; align-items: center; justify-content: center; 
+                      opacity: 0; transition: opacity 0.2s; cursor: pointer; }
+    .tab-btn { border-bottom: 2px solid transparent; color: rgba(255,255,255,0.4); transition: all 0.2s; padding-bottom: 8px; }
+    .tab-btn.active { border-color: #00c8e0; color: white; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeInUp 0.5s ease-out forwards; }
+
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #111; border: 1px solid rgba(0,200,224,0.3);
+      color: white; padding: 12px 20px; border-radius: 12px;
+      font-size: 14px; z-index: 100;
+      animation: fadeInUp 0.3s ease-out;
+    }
+    [dir="rtl"] .toast { right: auto; left: 24px; }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen bg-grid">
+
+  <nav id="mainNav" 
+       class="border-b border-white/10 px-8 py-4 flex items-center justify-between 
+              sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md">
+  </nav>
+  <div id="mobileMenu" class="hidden md:hidden bg-[#0f0f0f] border-b border-white/10"></div>
+
+  <div class="max-w-4xl mx-auto px-8 py-12 fade-in">
+
+    <!-- Header -->
+    <div class="mb-10">
+      <h1 class="text-4xl font-black mb-2">
+        <span data-i18n="profile_title">My Profile</span>
+        <span class="text-[#00c8e0]"> </span>
+      </h1>
+      <p class="text-white/40 text-sm">Manage your account information</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- LEFT: Avatar + Info Summary -->
+      <div class="md:col-span-1">
+        <div class="glass rounded-2xl p-6 text-center mb-6">
+
+          <!-- Avatar -->
+          <div class="flex justify-center mb-4">
+            <div class="avatar-wrapper">
+              <img id="avatarImg" src="" alt="Avatar" 
+                   class="w-24 h-24 rounded-full object-cover border-2 border-[#00c8e0]/50 hidden"/>
+              <div id="avatarPlaceholder" 
+                   class="w-24 h-24 rounded-full bg-[#00c8e0]/20 border-2 border-[#00c8e0]/50 
+                          flex items-center justify-center text-[#00c8e0] text-3xl font-black">
+                ?
+              </div>
+              <div class="avatar-overlay" onclick="document.getElementById('avatarInput').click()">
+                <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)"/>
+
+          <button onclick="document.getElementById('avatarInput').click()" 
+                  class="text-xs text-[#00c8e0] hover:text-white transition mb-4 block w-full"
+                  data-i18n="profile_change_photo">Change Photo</button>
+
+          <div id="profileName" class="font-black text-lg mb-1">—</div>
+          <div id="profileUsername" class="text-white/40 text-sm mb-2">—</div>
+          <div id="profileProvider" class="text-xs px-3 py-1 rounded-full bg-[#00c8e0]/10 text-[#00c8e0] inline-block">—</div>
+
+          <div class="mt-6 pt-6 border-t border-white/10 text-left">
+            <div class="flex justify-between text-sm mb-3">
+              <span class="text-white/40" data-i18n="profile_joined">Member Since</span>
+              <span id="profileJoined" class="font-semibold">—</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-white/40">Provider</span>
+              <span id="profileProviderText" class="font-semibold capitalize">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="glass rounded-2xl p-6 border-red-500/20">
+          <h3 class="font-bold text-red-400 mb-4" data-i18n="profile_danger">Danger Zone</h3>
+          <button onclick="confirmDelete()" 
+                  class="w-full py-2 rounded-xl text-sm font-semibold border border-red-500/30 
+                         text-red-400 hover:bg-red-500/10 transition"
+                  data-i18n="profile_delete">Delete Account</button>
+        </div>
+      </div>
+
+      <!-- RIGHT: Edit Form + Tabs -->
+      <div class="md:col-span-2">
+
+        <!-- Tabs -->
+        <div class="flex gap-6 mb-8 border-b border-white/10">
+          <button onclick="switchProfileTab('info')" id="ptab-info" 
+                  class="tab-btn active text-sm font-bold tracking-wide">
+            Account Info
+          </button>
+          <button onclick="switchProfileTab('purchases')" id="ptab-purchases" 
+                  class="tab-btn text-sm font-bold tracking-wide"
+                  data-i18n="profile_purchases">My Purchases</button>
+        </div>
+
+        <!-- INFO TAB -->
+        <div id="ptab-info-content">
+          <form onsubmit="saveProfile(event)" class="flex flex-col gap-5">
+
+            <div>
+              <label class="text-xs text-white/40 font-semibold tracking-widest mb-2 block"
+                     data-i18n="profile_username">USERNAME</label>
+              <input type="text" id="editUsername" 
+                     class="input-field w-full px-4 py-3 rounded-xl text-sm" 
+                     placeholder="Username" required/>
+            </div>
+
+            <div>
+              <label class="text-xs text-white/40 font-semibold tracking-widest mb-2 block"
+                     data-i18n="profile_name">DISPLAY NAME</label>
+              <input type="text" id="editName" 
+                     class="input-field w-full px-4 py-3 rounded-xl text-sm" 
+                     placeholder="Display Name"/>
+            </div>
+
+            <div>
+              <label class="text-xs text-white/40 font-semibold tracking-widest mb-2 block"
+                     data-i18n="profile_email">EMAIL</label>
+              <input type="email" id="editEmail" 
+                     class="input-field w-full px-4 py-3 rounded-xl text-sm" 
+                     placeholder="Email" disabled/>
+              <p class="text-xs text-white/30 mt-1">Email is managed by your OAuth provider</p>
+            </div>
+
+            <div class="pt-2">
+              <button type="submit" class="btn-cyan px-8 py-3 rounded-xl text-sm"
+                      data-i18n="profile_save">Save Changes</button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- PURCHASES TAB -->
+        <div id="ptab-purchases-content" class="hidden">
+          <div id="purchasesList" class="flex flex-col gap-3">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 px-8 py-6 flex items-center justify-between text-white/40 text-sm mt-12">
+    <span data-i18n="footer_rights">© 2024 Nexoria Hub. All rights reserved.</span>
+    <span class="text-[#00c8e0]/40 font-bold">NXH</span>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = Auth.getUser();
+
+      // Redirect if not logged in
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      loadProfile(user);
+    });
+
+    function loadProfile(user) {
+      // Avatar
+      const avatarImg = document.getElementById('avatarImg');
+      const avatarPlaceholder = document.getElementById('avatarPlaceholder');
+
+      if (user.avatar) {
+        avatarImg.src = user.avatar;
+        avatarImg.classList.remove('hidden');
+        avatarPlaceholder.classList.add('hidden');
+      } else {
+        avatarPlaceholder.textContent = user.username.charAt(0).toUpperCase();
+      }
+
+      // Info
+      document.getElementById('profileName').textContent = user.name || user.username;
+      document.getElementById('profileUsername').textContent = '@' + user.username;
+      document.getElementById('profileProvider').textContent = user.provider || 'oauth';
+      document.getElementById('profileProviderText').textContent = user.provider || 'oauth';
+      document.getElementById('profileJoined').textContent = user.joined
+        ? new Date(user.joined).toLocaleDateString()
+        : 'Today';
+
+      // Form
+      document.getElementById('editUsername').value = user.username || '';
+      document.getElementById('editName').value = user.name || '';
+      document.getElementById('editEmail').value = user.email || '';
+
+      // Purchases
+      renderPurchases(user.purchases || []);
+    }
+
+    function handleAvatarUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      // Validate
+      if (!file.type.startsWith('image/')) {
+        showToast('❌ Please upload an image file');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('❌ Image must be less than 5MB');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const base64 = e.target.result;
+
+        // Show preview
+        const avatarImg = document.getElementById('avatarImg');
+        const avatarPlaceholder = document.getElementById('avatarPlaceholder');
+        avatarImg.src = base64;
+        avatarImg.classList.remove('hidden');
+        avatarPlaceholder.classList.add('hidden');
+
+        // Save to localStorage
+        const user = Auth.getUser();
+        user.avatar = base64;
+        Auth.setUser(user);
+
+        showToast('✅ Photo updated!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveProfile(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('editUsername').value.trim();
+      const name = document.getElementById('editName').value.trim();
+
+      if (!username) {
+        showToast('❌ Username cannot be empty');
+        return;
+      }
+
+      if (username.length < 3) {
+        showToast('❌ Username must be at least 3 characters');
+        return;
+      }
+
+      const user = Auth.getUser();
+      user.username = username;
+      user.name = name || username;
+      Auth.setUser(user);
+
+      // Update sidebar display
+      document.getElementById('profileName').textContent = user.name;
+      document.getElementById('profileUsername').textContent = '@' + user.username;
+
+      showToast('✅ Profile saved successfully!');
+
+      // Rebuild navbar to reflect changes
+      Navbar.build();
+    }
+
+    function renderPurchases(purchases) {
+      const container = document.getElementById('purchasesList');
+
+      if (!purchases.length) {
+        container.innerHTML = `
+          <div class="text-center py-16 text-white/30">
+            <div class="text-5xl mb-4">🛒</div>
+            <p class="font-semibold" data-i18n="profile_no_purchases">No purchases yet</p>
+            <a href="store.html" class="text-[#00c8e0] text-sm mt-2 inline-block hover:text-white transition">
+              Browse Store →
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = purchases.map(p => `
+        <div class="glass rounded-xl p-4 flex items-center justify-between">
+          <div>
+            <div class="font-bold text-sm">${p.product_name}</div>
+            <div class="text-white/40 text-xs mt-0.5">${new Date(p.purchased_at).toLocaleDateString()}</div>
+          </div>
+          <div class="text-[#00c8e0] font-black">$${p.price}</div>
+        </div>
+      `).join('');
+    }
+
+    function switchProfileTab(tab) {
+      const tabs = ['info', 'purchases'];
+      tabs.forEach(t => {
+        document.getElementById(`ptab-${t}`).classList.toggle('active', t === tab);
+        document.getElementById(`ptab-${t}-content`).classList.toggle('hidden', t !== tab);
+      });
+    }
+
+    function confirmDelete() {
+      if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
+        Auth.logout();
+      }
+    }
+
+    function showToast(msg) {
+      const existing = document.querySelector('.toast');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+  </script>
+
+</body>
+</html>

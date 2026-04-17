@@ -7,7 +7,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
     * { font-family: 'Inter', sans-serif; }
+    [dir="rtl"] * { font-family: 'Tajawal', sans-serif; }
+
     .bg-grid {
       background-image:
         linear-gradient(rgba(0,200,224,0.03) 1px, transparent 1px),
@@ -20,124 +23,124 @@
     .btn-cyan { background: #00c8e0; color: #000; font-weight: 700; transition: all 0.2s; }
     .btn-cyan:hover { background: #00e5ff; }
     .avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
-    body, * { transition: font-family 0.3s ease; }
+    .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; }
+    .input-field:focus { outline: none; border-color: #00c8e0; }
+    .input-field::placeholder { color: rgba(255,255,255,0.3); }
   </style>
 </head>
 <body class="bg-[#0a0a0a] text-white min-h-screen bg-grid">
 
-  <nav class="border-b border-white/10 px-8 py-4 flex items-center justify-between sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md">
-    <a href="index.html" class="border border-[#00c8e0] text-[#00c8e0] font-bold px-3 py-1 rounded text-sm tracking-widest">NXH</a>
-    <div class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-widest text-white/50">
-      <a href="index.html" data-i18n="nav-home" class="hover:text-white transition">HOME</a>
-      <a href="store.html" data-i18n="nav-store" class="hover:text-white transition">STORE</a>
-      <a href="community.html" data-i18n="nav-community" class="text-white border-b-2 border-[#00c8e0] pb-0.5">COMMUNITY</a>
-      <a href="support.html" data-i18n="nav-support" class="hover:text-white transition">SUPPORT</a>
-    </div>
-    <div class="flex items-center gap-3">
-      <button id="langBtn" onclick="toggleLang()" class="border border-white/20 text-white/70 px-3 py-1 rounded-full text-xs font-bold hover:border-[#00c8e0] hover:text-[#00c8e0] transition cursor-pointer">AR</button>
-      <a href="login.html" data-i18n="nav-login" class="btn-cyan px-5 py-2 rounded-full text-sm">Login</a>
-    </div>
+  <nav id="mainNav" 
+       class="border-b border-white/10 px-8 py-4 flex items-center justify-between 
+              sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md">
   </nav>
+  <div id="mobileMenu" class="hidden md:hidden bg-[#0f0f0f] border-b border-white/10"></div>
 
   <div class="max-w-5xl mx-auto px-8 py-12">
-    
     <div class="flex items-center justify-between mb-10">
       <div>
-        <h1 data-i18n="comm-title" class="text-4xl font-black mb-2">Community <span class="text-[#00c8e0]">Hub</span></h1>
-        <p data-i18n="comm-p" class="text-white/40">12,000+ members — share, discuss, grow</p>
+        <h1 class="text-4xl font-black mb-2">
+          <span data-i18n="community_title">Community</span>
+          <span class="text-[#00c8e0]" data-i18n="community_accent"> Hub</span>
+        </h1>
+        <p class="text-white/40" data-i18n="community_desc">12,000+ members — share, discuss, grow</p>
       </div>
-      <button onclick="showPostModal()" data-i18n="btn-new-post" class="btn-cyan px-6 py-3 rounded-xl text-sm">+ New Post</button>
+      <button onclick="showPostModal()" class="btn-cyan px-6 py-3 rounded-xl text-sm"
+              data-i18n="new_post">+ New Post</button>
     </div>
 
+    <!-- Stats -->
     <div class="grid grid-cols-4 gap-4 mb-10">
-      <div class="glass rounded-xl p-4 text-center">
-        <div class="text-xl font-black text-[#00c8e0]">12K+</div>
-        <div class="text-xs text-white/40 mt-1">Members</div>
-      </div>
-      <div class="glass rounded-xl p-4 text-center">
-        <div class="text-xl font-black text-[#00c8e0]">3.4K</div>
-        <div class="text-xs text-white/40 mt-1">Posts</div>
-      </div>
-      <div class="glass rounded-xl p-4 text-center">
-        <div class="text-xl font-black text-[#00c8e0]">847</div>
-        <div class="text-xs text-white/40 mt-1">Online Now</div>
-      </div>
-      <div class="glass rounded-xl p-4 text-center">
-        <div class="text-xl font-black text-[#00c8e0]">28</div>
-        <div class="text-xs text-white/40 mt-1">New Today</div>
-      </div>
+      <div class="glass rounded-xl p-4 text-center"><div class="text-xl font-black text-[#00c8e0]">12K+</div><div class="text-xs text-white/40 mt-1" data-i18n="stat_members">Members</div></div>
+      <div class="glass rounded-xl p-4 text-center"><div class="text-xl font-black text-[#00c8e0]">3.4K</div><div class="text-xs text-white/40 mt-1">Posts</div></div>
+      <div class="glass rounded-xl p-4 text-center"><div class="text-xl font-black text-[#00c8e0]">847</div><div class="text-xs text-white/40 mt-1">Online</div></div>
+      <div class="glass rounded-xl p-4 text-center"><div class="text-xl font-black text-[#00c8e0]">28</div><div class="text-xs text-white/40 mt-1">New Today</div></div>
     </div>
 
+    <!-- Tabs -->
     <div class="flex gap-3 mb-8">
-      <button onclick="setPTab('all', this)" class="px-4 py-2 rounded-lg text-sm font-semibold border border-[#00c8e0] text-[#00c8e0] bg-[#00c8e0]/10 ptab">All</button>
-      <button onclick="setPTab('general', this)" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 text-white/50 ptab">General</button>
-      <button onclick="setPTab('showcase', this)" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 text-white/50 ptab">Showcase</button>
-      <button onclick="setPTab('help', this)" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 text-white/50 ptab">Help</button>
+      <button onclick="setPTab('all', this)" class="px-4 py-2 rounded-lg text-sm font-semibold border border-[#00c8e0] text-[#00c8e0] bg-[#00c8e0]/10 ptab" data-i18n="tab_all">All</button>
+      <button onclick="setPTab('general', this)" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 text-white/50 ptab" data-i18n="tab_general">General</button>
+      <button onclick="setPTab('showcase', this)" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 text-white/50 ptab" data-i18n="tab_showcase">Showcase</button>
+      <button onclick="setPTab('help', this)" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 text-white/50 ptab" data-i18n="tab_help">Help</button>
     </div>
 
-    <div id="postsContainer" class="flex flex-col gap-4">
-    </div>
+    <div id="postsContainer" class="flex flex-col gap-4"></div>
   </div>
 
+  <!-- Post Modal -->
   <div id="postModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center px-4">
     <div class="glass rounded-2xl p-8 w-full max-w-lg">
       <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl font-black">Create Post</h3>
+        <h3 class="text-xl font-black" data-i18n="modal_create">Create Post</h3>
         <button onclick="hidePostModal()" class="text-white/40 hover:text-white text-2xl">×</button>
       </div>
-      <select class="w-full bg-white/5 border border-white/10 text-white px-4 py-3 rounded-xl text-sm mb-4 focus:outline-none focus:border-[#00c8e0]">
-        <option value="general">📢 General</option>
-        <option value="showcase">🏆 Showcase</option>
-        <option value="help">❓ Help</option>
+      <select id="postCategory" class="input-field w-full px-4 py-3 rounded-xl text-sm mb-4">
+        <option value="general" data-i18n="cat_general">📢 General</option>
+        <option value="showcase" data-i18n="cat_showcase">🏆 Showcase</option>
+        <option value="help" data-i18n="cat_help">❓ Help</option>
       </select>
-      <input type="text" id="postTitle" placeholder="Post title..." class="w-full bg-white/5 border border-white/10 text-white px-4 py-3 rounded-xl text-sm mb-4 focus:outline-none focus:border-[#00c8e0] placeholder-white/30"/>
-      <textarea id="postContent" placeholder="What's on your mind?" rows="4" class="w-full bg-white/5 border border-white/10 text-white px-4 py-3 rounded-xl text-sm mb-6 focus:outline-none focus:border-[#00c8e0] placeholder-white/30 resize-none"></textarea>
+      <input type="text" id="postTitle" data-i18n="modal_title_ph" placeholder="Post title..." 
+             class="input-field w-full px-4 py-3 rounded-xl text-sm mb-4"/>
+      <textarea id="postContent" data-i18n="modal_content_ph" placeholder="What's on your mind?" 
+                rows="4" class="input-field w-full px-4 py-3 rounded-xl text-sm mb-6 resize-none"></textarea>
       <div class="flex gap-3">
-        <button onclick="submitPost()" class="btn-cyan flex-1 py-3 rounded-xl text-sm">Post</button>
-        <button onclick="hidePostModal()" class="flex-1 py-3 rounded-xl text-sm border border-white/10 text-white/50 hover:border-white/30">Cancel</button>
+        <button onclick="submitPost()" class="btn-cyan flex-1 py-3 rounded-xl text-sm" data-i18n="modal_post">Post</button>
+        <button onclick="hidePostModal()" 
+                class="flex-1 py-3 rounded-xl text-sm border border-white/10 text-white/50 hover:border-white/30"
+                data-i18n="modal_cancel">Cancel</button>
       </div>
     </div>
   </div>
 
   <footer class="border-t border-white/10 px-8 py-6 flex items-center justify-between text-white/40 text-sm mt-12">
-    <span data-i18n="footer-rights">© 2024 Nexoria Hub. All rights reserved.</span>
+    <span data-i18n="footer_rights">© 2024 Nexoria Hub. All rights reserved.</span>
     <span class="text-[#00c8e0]/40 font-bold">NXH</span>
   </footer>
 
+  <script src="shared.js"></script>
   <script>
     const posts = [
       { id: 1, title: 'Best aim settings for Valorant?', content: 'Been grinding ranked and my aim is inconsistent. Anyone have good config recommendations from the store?', author: 'ProGamer99', avatar: 'PG', avatarBg: '#5865f2', category: 'help', likes: 24, replies: 8, time: '2h ago' },
-      { id: 2, title: 'Hit Diamond with the Pro Config!', content: 'Just want to share that I reached Diamond rank after using the Pro Aim Config from the store. Absolutely insane product 🔥', author: 'DiamondX', avatar: 'DX', avatarBg: '#00c8e0', category: 'showcase', likes: 87, replies: 23, time: '5h ago' },
-      { id: 3, title: 'Welcome to the community everyone!', content: 'Excited to see this community growing so fast. Feel free to share your setups, ask questions, and connect with other gamers!', author: 'NXH_Admin', avatar: 'AD', avatarBg: '#ff4444', category: 'general', likes: 156, replies: 42, time: '1d ago' },
-      { id: 4, title: 'FPS Booster actually works?', content: 'Was skeptical at first but the FPS Booster Tool gave me +40 FPS on my old PC. No joke. Worth every penny.', author: 'LowEndGamer', avatar: 'LG', avatarBg: '#ff8800', category: 'showcase', likes: 45, replies: 12, time: '2d ago' },
+      { id: 2, title: 'Hit Diamond with the Pro Config!', content: 'Just want to share that I reached Diamond rank after using the Pro Aim Config. Absolutely insane product 🔥', author: 'DiamondX', avatar: 'DX', avatarBg: '#00c8e0', category: 'showcase', likes: 87, replies: 23, time: '5h ago' },
+      { id: 3, title: 'Welcome to the community everyone!', content: 'Excited to see this community growing so fast. Feel free to share your setups, ask questions, and connect!', author: 'NXH_Admin', avatar: 'AD', avatarBg: '#ff4444', category: 'general', likes: 156, replies: 42, time: '1d ago' },
+      { id: 4, title: 'FPS Booster actually works?', content: 'Was skeptical at first but the FPS Booster Tool gave me +40 FPS on my old PC. Worth every penny.', author: 'LowEndGamer', avatar: 'LG', avatarBg: '#ff8800', category: 'showcase', likes: 45, replies: 12, time: '2d ago' },
     ];
 
-    let currentPFilter = 'all';
+    window._currentPosts = posts;
     let allPosts = [...posts];
+    let currentPFilter = 'all';
 
     const catColors = { general: '#00c8e0', showcase: '#ff8800', help: '#ff4444' };
-    const catLabels = { general: '📢 General', showcase: '🏆 Showcase', help: '❓ Help' };
 
     function renderPosts(list) {
+      window._currentPosts = list;
       const container = document.getElementById('postsContainer');
       container.innerHTML = list.map(p => `
-        <div class="post-card rounded-2xl p-6 cursor-pointer">
+        <div class="post-card rounded-2xl p-6">
           <div class="flex items-start gap-4">
-            <div class="avatar flex-shrink-0" style="background: ${p.avatarBg}22; color: ${p.avatarBg}; border: 1px solid ${p.avatarBg}44">${p.avatar}</div>
+            <div class="avatar flex-shrink-0" 
+                 style="background:${p.avatarBg}22;color:${p.avatarBg};border:1px solid ${p.avatarBg}44">
+              ${p.avatar}
+            </div>
             <div class="flex-1">
-              <div class="flex items-center gap-2 mb-1">
+              <div class="flex items-center gap-2 mb-1 flex-wrap">
                 <span class="font-semibold text-sm">${p.author}</span>
                 <span class="text-white/30 text-xs">${p.time}</span>
-                <span class="text-xs px-2 py-0.5 rounded-full" style="background: ${catColors[p.category]}22; color: ${catColors[p.category]}">${catLabels[p.category]}</span>
+                <span class="text-xs px-2 py-0.5 rounded-full" 
+                      style="background:${catColors[p.category]}22;color:${catColors[p.category]}">
+                  ${i18n.t('cat_' + p.category)}
+                </span>
               </div>
               <h3 class="font-bold text-base mb-2">${p.title}</h3>
               <p class="text-white/50 text-sm mb-4">${p.content}</p>
               <div class="flex items-center gap-6 text-white/30 text-sm">
-                <button onclick="likePost(${p.id}, this)" class="flex items-center gap-1 hover:text-[#00c8e0] transition">
-                  <span>❤️</span> <span class="like-count">${p.likes}</span>
+                <button onclick="likePost(${p.id}, this)" 
+                        class="flex items-center gap-1 hover:text-[#00c8e0] transition">
+                  ❤️ <span class="like-count">${p.likes}</span>
                 </button>
-                <span class="flex items-center gap-1">💬 ${p.replies} replies</span>
-                <button class="hover:text-white transition ml-auto">Share</button>
+                <span>💬 ${p.replies} <span data-i18n="post_replies">${i18n.t('post_replies')}</span></span>
+                <button class="hover:text-white transition ml-auto" data-i18n="post_share">${i18n.t('post_share')}</button>
               </div>
             </div>
           </div>
@@ -151,7 +154,6 @@
         b.className = 'px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 text-white/50 ptab';
       });
       btn.className = 'px-4 py-2 rounded-lg text-sm font-semibold border border-[#00c8e0] text-[#00c8e0] bg-[#00c8e0]/10 ptab';
-      
       const filtered = currentPFilter === 'all' ? allPosts : allPosts.filter(p => p.category === currentPFilter);
       renderPosts(filtered);
     }
@@ -163,26 +165,32 @@
       btn.style.color = '#00c8e0';
     }
 
-    function showPostModal() { document.getElementById('postModal').classList.remove('hidden'); }
-    function hidePostModal() { document.getElementById('postModal').classList.add('hidden'); }
+    function showPostModal() {
+      if (!Auth.isLoggedIn()) { window.location.href = 'login.html'; return; }
+      document.getElementById('postModal').classList.remove('hidden');
+    }
+
+    function hidePostModal() {
+      document.getElementById('postModal').classList.add('hidden');
+    }
 
     function submitPost() {
       const title = document.getElementById('postTitle').value.trim();
       const content = document.getElementById('postContent').value.trim();
-      if (!title || !content) { alert('Please fill in all fields'); return; }
-      
+      const category = document.getElementById('postCategory').value;
+      if (!title || !content) return;
+
+      const user = Auth.getUser();
       const newPost = {
         id: allPosts.length + 1,
-        title, content,
-        author: 'You',
-        avatar: 'YO',
+        title, content, category,
+        author: user ? user.username : 'Anonymous',
+        avatar: user ? user.username.substring(0, 2).toUpperCase() : 'AN',
         avatarBg: '#00c8e0',
-        category: 'general',
-        likes: 0,
-        replies: 0,
+        likes: 0, replies: 0,
         time: 'Just now'
       };
-      
+
       allPosts.unshift(newPost);
       renderPosts(currentPFilter === 'all' ? allPosts : allPosts.filter(p => p.category === currentPFilter));
       hidePostModal();
@@ -192,8 +200,6 @@
 
     renderPosts(allPosts);
   </script>
-  
-  <script src="lang.js"></script>
 
 </body>
 </html>

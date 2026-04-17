@@ -7,7 +7,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
     * { font-family: 'Inter', sans-serif; }
+    [dir="rtl"] * { font-family: 'Tajawal', sans-serif; }
+
     .bg-grid {
       background-image:
         linear-gradient(rgba(0,200,224,0.03) 1px, transparent 1px),
@@ -26,74 +29,76 @@
     .input-field::placeholder { color: rgba(255,255,255,0.3); }
     .support-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); transition: all 0.2s; }
     .support-card:hover { border-color: rgba(0,200,224,0.3); transform: translateY(-2px); }
-    body, * { transition: font-family 0.3s ease; }
   </style>
 </head>
 <body class="bg-[#0a0a0a] text-white min-h-screen bg-grid">
 
-  <nav class="border-b border-white/10 px-8 py-4 flex items-center justify-between sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md">
-    <a href="index.html" class="border border-[#00c8e0] text-[#00c8e0] font-bold px-3 py-1 rounded text-sm tracking-widest">NXH</a>
-    <div class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-widest text-white/50">
-      <a href="index.html" data-i18n="nav-home" class="hover:text-white transition">HOME</a>
-      <a href="store.html" data-i18n="nav-store" class="hover:text-white transition">STORE</a>
-      <a href="community.html" data-i18n="nav-community" class="hover:text-white transition">COMMUNITY</a>
-      <a href="support.html" data-i18n="nav-support" class="text-white border-b-2 border-[#00c8e0] pb-0.5">SUPPORT</a>
-    </div>
-    <div class="flex items-center gap-3">
-      <button id="langBtn" onclick="toggleLang()" class="border border-white/20 text-white/70 px-3 py-1 rounded-full text-xs font-bold hover:border-[#00c8e0] hover:text-[#00c8e0] transition cursor-pointer">AR</button>
-      <a href="login.html" data-i18n="nav-login" class="btn-cyan px-5 py-2 rounded-full text-sm">Login</a>
-    </div>
+  <nav id="mainNav" 
+       class="border-b border-white/10 px-8 py-4 flex items-center justify-between 
+              sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md">
   </nav>
+  <div id="mobileMenu" class="hidden md:hidden bg-[#0f0f0f] border-b border-white/10"></div>
 
   <div class="max-w-4xl mx-auto px-8 py-12">
-    
     <div class="text-center mb-14">
-      <h1 data-i18n="supp-title" class="text-5xl font-black mb-4">How can we <span class="text-[#00c8e0]">help?</span></h1>
-      <p data-i18n="supp-p" class="text-white/40 mb-8">Our support team is available 24/7</p>
+      <h1 class="text-5xl font-black mb-4">
+        <span data-i18n="support_title">How can we</span>
+        <span class="text-[#00c8e0]" data-i18n="support_accent"> help?</span>
+      </h1>
+      <p class="text-white/40 mb-8" data-i18n="support_sub">Our support team is available 24/7</p>
       <div class="relative max-w-xl mx-auto">
-        <input type="text" placeholder="Search for answers..." oninput="searchFAQ(this.value)"
-          class="input-field w-full px-6 py-4 rounded-2xl text-sm focus:outline-none"/>
+        <input type="text" data-i18n="support_search" placeholder="Search for answers..." 
+               oninput="searchFAQ(this.value)"
+               class="input-field w-full px-6 py-4 rounded-2xl text-sm focus:outline-none"/>
         <span class="absolute right-5 top-4 text-white/30">🔍</span>
       </div>
     </div>
 
+    <!-- Quick Actions -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-14">
       <a href="https://discord.gg" target="_blank" class="support-card rounded-2xl p-6 text-center block">
         <div class="text-4xl mb-3">💬</div>
-        <h3 class="font-bold mb-1">Live Chat</h3>
-        <p class="text-white/40 text-sm">Chat with us on Discord</p>
-        <div class="mt-3 text-xs text-green-400 font-semibold">● Online Now</div>
+        <h3 class="font-bold mb-1" data-i18n="support_chat">Live Chat</h3>
+        <p class="text-white/40 text-sm" data-i18n="support_chat_desc">Chat with us on Discord</p>
+        <div class="mt-3 text-xs text-green-400 font-semibold" data-i18n="support_chat_status">● Online Now</div>
       </a>
       <div onclick="showTicketModal()" class="support-card rounded-2xl p-6 text-center cursor-pointer">
         <div class="text-4xl mb-3">🎫</div>
-        <h3 class="font-bold mb-1">Open Ticket</h3>
-        <p class="text-white/40 text-sm">Create a support ticket</p>
-        <div class="mt-3 text-xs text-[#00c8e0] font-semibold">~2h response time</div>
+        <h3 class="font-bold mb-1" data-i18n="support_ticket">Open Ticket</h3>
+        <p class="text-white/40 text-sm" data-i18n="support_ticket_desc">Create a support ticket</p>
+        <div class="mt-3 text-xs text-[#00c8e0] font-semibold" data-i18n="support_ticket_time">~2h response time</div>
       </div>
       <div class="support-card rounded-2xl p-6 text-center">
         <div class="text-4xl mb-3">📧</div>
-        <h3 class="font-bold mb-1">Email Support</h3>
-        <p class="text-white/40 text-sm">support@nexoriahub.com</p>
-        <div class="mt-3 text-xs text-white/30 font-semibold">~24h response time</div>
+        <h3 class="font-bold mb-1" data-i18n="support_email">Email Support</h3>
+        <p class="text-white/40 text-sm" data-i18n="support_email_desc">support@nexoriahub.com</p>
+        <div class="mt-3 text-xs text-white/30 font-semibold" data-i18n="support_email_time">~24h response time</div>
       </div>
     </div>
 
+    <!-- FAQ -->
     <div class="mb-14">
-      <h2 class="text-2xl font-black mb-2">Frequently Asked <span class="text-[#00c8e0]">Questions</span></h2>
-      <p class="text-white/40 text-sm mb-8">Quick answers to common questions</p>
-      
-      <div id="faqList" class="flex flex-col gap-3">
-      </div>
+      <h2 class="text-2xl font-black mb-2">
+        <span data-i18n="faq_title">Frequently Asked</span>
+        <span class="text-[#00c8e0]" data-i18n="faq_accent"> Questions</span>
+      </h2>
+      <p class="text-white/40 text-sm mb-8" data-i18n="faq_desc">Quick answers to common questions</p>
+      <div id="faqList" class="flex flex-col gap-3"></div>
     </div>
 
+    <!-- Contact Form -->
     <div class="glass rounded-2xl p-8">
-      <h2 class="text-2xl font-black mb-2">Still need <span class="text-[#00c8e0]">help?</span></h2>
-      <p class="text-white/40 text-sm mb-8">Send us a message and we'll get back to you ASAP</p>
-      
+      <h2 class="text-2xl font-black mb-2">
+        <span data-i18n="contact_title">Still need</span>
+        <span class="text-[#00c8e0]" data-i18n="contact_accent"> help?</span>
+      </h2>
+      <p class="text-white/40 text-sm mb-8" data-i18n="contact_desc">Send us a message and we'll get back to you ASAP</p>
       <form onsubmit="submitContact(event)" class="flex flex-col gap-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="text" placeholder="Your name" class="input-field px-4 py-3 rounded-xl text-sm" required/>
-          <input type="email" placeholder="Email address" class="input-field px-4 py-3 rounded-xl text-sm" required/>
+          <input type="text" data-i18n="contact_name" placeholder="Your name" 
+                 class="input-field px-4 py-3 rounded-xl text-sm" required/>
+          <input type="email" data-i18n="contact_email" placeholder="Email address" 
+                 class="input-field px-4 py-3 rounded-xl text-sm" required/>
         </div>
         <select class="input-field px-4 py-3 rounded-xl text-sm">
           <option>Account Issue</option>
@@ -102,50 +107,58 @@
           <option>Billing</option>
           <option>Other</option>
         </select>
-        <textarea placeholder="Describe your issue..." rows="5" class="input-field px-4 py-3 rounded-xl text-sm resize-none" required></textarea>
-        <button type="submit" class="btn-cyan px-8 py-3 rounded-xl text-sm self-start">Send Message</button>
+        <textarea placeholder="Describe your issue..." rows="5" 
+                  class="input-field px-4 py-3 rounded-xl text-sm resize-none" required></textarea>
+        <button type="submit" class="btn-cyan px-8 py-3 rounded-xl text-sm self-start"
+                data-i18n="contact_send">Send Message</button>
       </form>
     </div>
-
   </div>
 
+  <!-- Ticket Modal -->
   <div id="ticketModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center px-4">
     <div class="glass rounded-2xl p-8 w-full max-w-md">
       <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl font-black">Open Support Ticket</h3>
+        <h3 class="text-xl font-black" data-i18n="ticket_modal_title">Open Support Ticket</h3>
         <button onclick="hideTicketModal()" class="text-white/40 hover:text-white text-2xl">×</button>
       </div>
       <form onsubmit="submitTicket(event)" class="flex flex-col gap-4">
-        <input type="text" placeholder="Ticket subject" class="input-field px-4 py-3 rounded-xl text-sm" required/>
+        <input type="text" data-i18n="ticket_subject" placeholder="Ticket subject" 
+               class="input-field px-4 py-3 rounded-xl text-sm" required/>
         <select class="input-field px-4 py-3 rounded-xl text-sm">
           <option>🔴 Urgent</option>
           <option>🟡 Medium</option>
           <option>🟢 Low</option>
         </select>
-        <textarea placeholder="Describe your issue in detail..." rows="4" class="input-field px-4 py-3 rounded-xl text-sm resize-none" required></textarea>
-        <button type="submit" class="btn-cyan py-3 rounded-xl text-sm">Submit Ticket</button>
+        <textarea placeholder="Describe your issue..." rows="4" 
+                  class="input-field px-4 py-3 rounded-xl text-sm resize-none" required></textarea>
+        <button type="submit" class="btn-cyan py-3 rounded-xl text-sm" 
+                data-i18n="ticket_submit">Submit Ticket</button>
       </form>
     </div>
   </div>
 
   <footer class="border-t border-white/10 px-8 py-6 flex items-center justify-between text-white/40 text-sm mt-12">
-    <span data-i18n="footer-rights">© 2024 Nexoria Hub. All rights reserved.</span>
+    <span data-i18n="footer_rights">© 2024 Nexoria Hub. All rights reserved.</span>
     <span class="text-[#00c8e0]/40 font-bold">NXH</span>
   </footer>
 
+  <script src="shared.js"></script>
   <script>
     const faqs = [
-      { q: 'How do I download my purchased products?', a: 'After purchase, go to your account dashboard and navigate to "My Products". You\'ll find all your downloads there with direct links.' },
+      { q: 'How do I download my purchased products?', a: 'After purchase, go to your account dashboard and navigate to "My Products". You\'ll find all your downloads there.' },
       { q: 'What payment methods do you accept?', a: 'We accept credit/debit cards, PayPal, crypto (BTC, ETH), and various regional payment methods.' },
-      { q: 'Are the scripts safe to use?', a: 'All scripts undergo security review before being listed. However, always use them responsibly and in accordance with game terms of service.' },
+      { q: 'Are the scripts safe to use?', a: 'All scripts undergo security review before being listed. Always use them responsibly.' },
       { q: 'How do I get a refund?', a: 'Refunds are available within 24 hours of purchase if the product doesn\'t work as described. Contact support with your order ID.' },
-      { q: 'Can I use products on multiple PCs?', a: 'License terms vary per product. Most products allow 1-2 devices. Check the product page for specific license details.' },
-      { q: 'How do I reset my password?', a: 'Go to the login page and click "Forgot password?". Enter your email and we\'ll send you a reset link within minutes.' },
+      { q: 'Can I use products on multiple PCs?', a: 'License terms vary per product. Most products allow 1-2 devices. Check the product page for details.' },
+      { q: 'How do I reset my password?', a: 'Go to the login page and click "Forgot password?". Enter your email and we\'ll send you a reset link.' },
     ];
 
+    window._currentFAQ = faqs;
+
     function renderFAQ(list) {
-      const container = document.getElementById('faqList');
-      container.innerHTML = list.map((faq, i) => `
+      window._currentFAQ = list;
+      document.getElementById('faqList').innerHTML = list.map((faq, i) => `
         <div class="faq-item rounded-xl overflow-hidden">
           <button onclick="toggleFAQ(${i})" class="w-full px-6 py-4 text-left flex items-center justify-between">
             <span class="font-semibold text-sm">${faq.q}</span>
@@ -162,14 +175,9 @@
       const answer = document.getElementById(`faq-answer-${index}`);
       const icon = document.getElementById(`faq-icon-${index}`);
       const isOpen = answer.classList.contains('open');
-      
       document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
       document.querySelectorAll('[id^="faq-icon-"]').forEach(i => i.textContent = '+');
-      
-      if (!isOpen) {
-        answer.classList.add('open');
-        icon.textContent = '−';
-      }
+      if (!isOpen) { answer.classList.add('open'); icon.textContent = '−'; }
     }
 
     function searchFAQ(query) {
@@ -181,22 +189,11 @@
 
     function showTicketModal() { document.getElementById('ticketModal').classList.remove('hidden'); }
     function hideTicketModal() { document.getElementById('ticketModal').classList.add('hidden'); }
-
-    function submitTicket(e) {
-      e.preventDefault();
-      alert('Ticket submitted! We\'ll get back to you within 2 hours.');
-      hideTicketModal();
-    }
-
-    function submitContact(e) {
-      e.preventDefault();
-      alert('Message sent! We\'ll respond to your email shortly.');
-    }
+    function submitTicket(e) { e.preventDefault(); alert('Ticket submitted!'); hideTicketModal(); }
+    function submitContact(e) { e.preventDefault(); alert('Message sent!'); }
 
     renderFAQ(faqs);
   </script>
-  
-  <script src="lang.js"></script>
 
 </body>
 </html>
