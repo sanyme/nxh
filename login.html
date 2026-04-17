@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — Nexoria Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+    * { font-family: 'Inter', sans-serif; }
+
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(0,200,224,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,224,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .social-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.2s;
+      color: white;
+    }
+    .social-btn:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-1px);
+    }
+
+    .input-field {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: white;
+      transition: all 0.2s;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #00c8e0;
+      background: rgba(0,200,224,0.05);
+    }
+    .input-field::placeholder { color: rgba(255,255,255,0.3); }
+
+    .btn-cyan {
+      background: #00c8e0;
+      color: #000;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .btn-cyan:hover {
+      background: #00e5ff;
+      box-shadow: 0 0 20px rgba(0,200,224,0.4);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.2);
+      font-size: 12px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeInUp 0.6s ease-out forwards; }
+
+    .tab-active {
+      color: white;
+      border-bottom: 2px solid #00c8e0;
+    }
+    .tab-inactive {
+      color: rgba(255,255,255,0.4);
+      border-bottom: 2px solid transparent;
+    }
+    body, * { transition: font-family 0.3s ease; }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen bg-grid flex flex-col">
+
+  <nav class="border-b border-white/10 px-8 py-4 flex items-center justify-between bg-[#0a0a0a]/90 backdrop-blur-md">
+    <a href="index.html" class="border border-[#00c8e0] text-[#00c8e0] font-bold px-3 py-1 rounded text-sm tracking-widest">NXH</a>
+    <div class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-widest text-white/50">
+      <a href="index.html" data-i18n="nav-home" class="hover:text-white transition">HOME</a>
+      <a href="store.html" data-i18n="nav-store" class="hover:text-white transition">STORE</a>
+      <a href="community.html" data-i18n="nav-community" class="hover:text-white transition">COMMUNITY</a>
+      <a href="support.html" data-i18n="nav-support" class="hover:text-white transition">SUPPORT</a>
+    </div>
+    <div class="w-24"></div>
+  </nav>
+
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="glass rounded-2xl p-10 w-full max-w-md fade-in">
+      
+      <div class="flex justify-center mb-6">
+        <span class="border border-[#00c8e0] text-[#00c8e0] font-bold px-5 py-2 rounded-lg text-lg tracking-widest">NXH</span>
+      </div>
+
+      <div class="flex mb-8 gap-0">
+        <button onclick="switchTab('login')" id="tab-login" class="flex-1 pb-3 text-sm font-bold tracking-wide tab-active transition">Sign In</button>
+        <button onclick="switchTab('register')" id="tab-register" class="flex-1 pb-3 text-sm font-bold tracking-wide tab-inactive transition">Register</button>
+      </div>
+
+      <div id="form-login">
+        <h2 class="text-2xl font-black text-center mb-1">Welcome back</h2>
+        <p class="text-white/40 text-sm text-center mb-8">Sign in to your Nexoria Hub account</p>
+
+        <div class="flex flex-col gap-3 mb-6">
+          <button class="social-btn flex items-center gap-3 px-5 py-3 rounded-xl font-semibold text-sm" onclick="window.location.href='https://nxh.onrender.com/login/discord'">
+            <svg width="20" height="20" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M60.1 4.9C55.5 2.7 50.6 1.1 45.5 0.2c-0.5 0.9-1.1 2.2-1.5 3.2-5.4-0.8-10.8-0.8-16.2 0-0.4-1-1-2.3-1.5-3.2C21.2 1.1 16.3 2.7 11.7 4.9 1.7 19.4-1 33.5 0.3 47.4c5.8 4.2 11.4 6.8 16.9 8.5 1.4-1.9 2.6-3.9 3.6-6-2-0.7-3.9-1.7-5.7-2.8 0.5-0.3 0.9-0.7 1.4-1 11.7 5.4 24.3 5.4 35.9 0 0.5 0.4 0.9 0.7 1.4 1-1.8 1.1-3.7 2.1-5.7 2.8 1 2.1 2.2 4.1 3.6 6 5.5-1.7 11.1-4.3 16.9-8.5 1.4-16-2.4-30-10.5-43.5zM23.7 38.8c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.5 0 6.4 3.2 6.4 7.1s-2.9 7.1-6.4 7.1zm23.6 0c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.5 0 6.4 3.2 6.4 7.1s-2.9 7.1-6.4 7.1z" fill="#5865F2"/>
+            </svg>
+            Continue with Discord
+          </button>
+
+          <button class="social-btn flex items-center gap-3 px-5 py-3 rounded-xl font-semibold text-sm" onclick="window.location.href='https://nxh.onrender.com/login/google'">
+            <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Continue with Google
+          </button>
+
+          <button class="social-btn flex items-center gap-3 px-5 py-3 rounded-xl font-semibold text-sm" onclick="window.location.href='https://nxh.onrender.com/login/github'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            Continue with GitHub
+          </button>
+        </div>
+
+        <div class="divider mb-6">OR</div>
+
+        <form onsubmit="handleLogin(event)" class="flex flex-col gap-4">
+          <input type="email" placeholder="Email address" class="input-field px-4 py-3 rounded-xl text-sm w-full" required/>
+          <input type="password" placeholder="Password" class="input-field px-4 py-3 rounded-xl text-sm w-full" required/>
+          <button type="submit" class="btn-cyan px-4 py-3 rounded-xl text-sm w-full mt-1">Sign In</button>
+        </form>
+
+        <div class="mt-6 flex items-center justify-between text-sm text-white/40">
+          <a href="#" class="hover:text-white transition">Forgot password?</a>
+          <span>No account? <a href="#" onclick="switchTab('register')" class="text-[#00c8e0] hover:text-white transition">Register</a></span>
+        </div>
+      </div>
+
+      <div id="form-register" class="hidden">
+        <h2 class="text-2xl font-black text-center mb-1">Create Account</h2>
+        <p class="text-white/40 text-sm text-center mb-8">Join the Nexoria Hub community</p>
+
+        <form onsubmit="handleRegister(event)" class="flex flex-col gap-4">
+          <input type="text" placeholder="Username" class="input-field px-4 py-3 rounded-xl text-sm w-full" required/>
+          <input type="email" placeholder="Email address" class="input-field px-4 py-3 rounded-xl text-sm w-full" required/>
+          <input type="password" placeholder="Password" class="input-field px-4 py-3 rounded-xl text-sm w-full" required/>
+          <input type="password" placeholder="Confirm Password" class="input-field px-4 py-3 rounded-xl text-sm w-full" required/>
+          <button type="submit" class="btn-cyan px-4 py-3 rounded-xl text-sm w-full mt-1">Create Account</button>
+        </form>
+
+        <p class="text-center text-white/30 text-xs mt-6">
+          By registering, you agree to our 
+          <a href="#" class="text-[#00c8e0]">Terms of Service</a> and 
+          <a href="#" class="text-[#00c8e0]">Privacy Policy</a>
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="border-t border-white/10 px-8 py-4 flex items-center justify-between text-white/30 text-sm">
+    <span data-i18n="footer-rights">© 2024 Nexoria Hub. All rights reserved.</span>
+    <span class="text-[#00c8e0]/40 font-bold">NXH</span>
+  </footer>
+
+  <script>
+    function switchTab(tab) {
+      const loginForm = document.getElementById('form-login');
+      const registerForm = document.getElementById('form-register');
+      const tabLogin = document.getElementById('tab-login');
+      const tabRegister = document.getElementById('tab-register');
+
+      if (tab === 'login') {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+        tabLogin.className = 'flex-1 pb-3 text-sm font-bold tracking-wide tab-active transition';
+        tabRegister.className = 'flex-1 pb-3 text-sm font-bold tracking-wide tab-inactive transition';
+      } else {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+        tabLogin.className = 'flex-1 pb-3 text-sm font-bold tracking-wide tab-inactive transition';
+        tabRegister.className = 'flex-1 pb-3 text-sm font-bold tracking-wide tab-active transition';
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = e.target[0].value;
+      const password = e.target[1].value;
+
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+        if (response.ok) {
+          alert('✅ ' + data.message);
+          window.location.href = 'index.html';
+        } else {
+          alert('❌ خطأ: ' + data.error);
+        }
+      } catch (err) {
+        console.error(err);
+        alert('❌ لا يمكن الاتصال بالسيرفر، تأكد أنه يعمل!');
+      }
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      const username = e.target[0].value;
+      const email = e.target[1].value;
+      const password = e.target[2].value;
+      const confirmPassword = e.target[3].value;
+
+      if (password !== confirmPassword) {
+        alert('❌ كلمات المرور غير متطابقة!');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password })
+        });
+        
+        const data = await response.json();
+        if (response.ok) {
+          alert('✅ ' + data.message);
+          switchTab('login');
+        } else {
+          alert('❌ خطأ: ' + data.error);
+        }
+      } catch (err) {
+        console.error(err);
+        alert('❌ لا يمكن الاتصال بالسيرفر!');
+      }
+    }
+  </script>
+  
+  <script src="lang.js"></script>
+
+</body>
+</html>

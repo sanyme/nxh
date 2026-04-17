@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nexoria Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Cairo:wght@400;700;900&display=swap');
+    
+    * { font-family: 'Inter', sans-serif; }
+    .glow-text { text-shadow: 0 0 40px rgba(0,200,224,0.4); }
+    .glow-btn  { box-shadow: 0 0 20px rgba(0,200,224,0.3); }
+    .card-hover {
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,200,224,0.4);
+    }
+    /* Animated background dots */
+    body { background-color: #0a0a0a; }
+    .bg-grid {
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Transition for language switching */
+    body, * { transition: font-family 0.3s ease; }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen">
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-4 border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-sm">
+    <div class="text-[#00c8e0] font-bold text-lg tracking-widest border border-[#00c8e0]/30 bg-[#00c8e0]/10 px-3 py-1 rounded-md">NXH</div>
+    <ul class="flex gap-8 text-sm font-medium tracking-widest uppercase">
+      <li><a href="index.html" data-i18n="nav-home" class="text-white border-b-2 border-[#00c8e0] pb-0.5">Home</a></li>
+      <li><a href="store.html" data-i18n="nav-store" class="text-white/50 hover:text-white transition">Store</a></li>
+      <li><a href="community.html" data-i18n="nav-community" class="text-white/50 hover:text-white transition">Community</a></li>
+      <li><a href="support.html" data-i18n="nav-support" class="text-white/50 hover:text-white transition">Support</a></li>
+    </ul>
+    <div class="flex items-center gap-3">
+      <button id="langBtn" onclick="toggleLang()" class="text-xs text-white/50 border border-white/15 rounded-full px-3 py-1.5 hover:text-white transition cursor-pointer">AR</button>
+      <a href="login.html" data-i18n="nav-login" class="text-sm font-semibold bg-[#00c8e0] text-black px-5 py-2 rounded-full hover:bg-[#00b3c9] transition glow-btn">Login</a>
+    </div>
+  </nav>
+
+  <section class="bg-grid min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 relative overflow-hidden">
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-[#00c8e0]/5 blur-3xl pointer-events-none"></div>
+    
+    <div data-i18n="hero-badge" class="mb-6 text-xs font-semibold tracking-widest uppercase text-[#00c8e0] bg-[#00c8e0]/10 border border-[#00c8e0]/25 rounded-full px-4 py-1.5">
+      Gaming Hub — Est. 2024
+    </div>
+    
+    <h1 data-i18n="hero-title" class="text-7xl font-black tracking-tight leading-none mb-4 glow-text">
+      NEXORIA <span class="text-[#00c8e0]">HUB</span>
+    </h1>
+    
+    <p data-i18n="hero-desc" class="text-white/40 text-base max-w-md leading-relaxed mb-10">
+      Your central hub for gaming tools, exclusive products, and a growing community.
+    </p>
+    
+    <div class="flex gap-4">
+      <a href="store.html" data-i18n="btn-store" class="bg-[#00c8e0] text-black font-semibold text-sm px-7 py-3 rounded-lg hover:bg-[#00b3c9] transition glow-btn">Browse Store</a>
+      <a href="login.html" data-i18n="btn-login" class="border border-white/20 text-white/80 font-semibold text-sm px-7 py-3 rounded-lg hover:border-white/40 hover:text-white transition">Login</a>
+    </div>
+    
+    <div class="mt-16 flex divide-x divide-white/10 border border-white/10 rounded-xl overflow-hidden bg-white/[0.02] rtl:flex-row-reverse">
+      <div class="px-10 py-4 text-center">
+        <div class="text-xl font-bold text-white" id="membersCount">12K+</div>
+        <div data-i18n="stat-members" class="text-xs text-white/35 uppercase tracking-widest mt-1">Members</div>
+      </div>
+      <div class="px-10 py-4 text-center">
+        <div class="text-xl font-bold text-white" id="productsCount">340+</div>
+        <div data-i18n="stat-products" class="text-xs text-white/35 uppercase tracking-widest mt-1">Products</div>
+      </div>
+      <div class="px-10 py-4 text-center">
+        <div class="text-xl font-bold text-white" id="uptimeCount">99%</div>
+        <div data-i18n="stat-uptime" class="text-xs text-white/35 uppercase tracking-widest mt-1">Uptime</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-10 py-20 max-w-6xl mx-auto">
+    <h2 data-i18n="features-title" class="text-3xl font-bold text-center mb-12">Why <span class="text-[#00c8e0]">Nexoria?</span></h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card-hover border border-white/10 bg-white/[0.03] rounded-xl p-6">
+        <div class="text-[#00c8e0] text-2xl mb-4">⚡</div>
+        <h3 class="font-semibold text-base mb-2">Instant Access</h3>
+        <p class="text-white/40 text-sm leading-relaxed">Get your products delivered instantly after purchase with no delays.</p>
+      </div>
+      <div class="card-hover border border-white/10 bg-white/[0.03] rounded-xl p-6">
+        <div class="text-[#00c8e0] text-2xl mb-4">🔒</div>
+        <h3 class="font-semibold text-base mb-2">Secure Login</h3>
+        <p class="text-white/40 text-sm leading-relaxed">Login with Discord, Google, or GitHub — fully OAuth secured.</p>
+      </div>
+      <div class="card-hover border border-white/10 bg-white/[0.03] rounded-xl p-6">
+        <div class="text-[#00c8e0] text-2xl mb-4">🎮</div>
+        <h3 class="font-semibold text-base mb-2">Gaming Community</h3>
+        <p class="text-white/40 text-sm leading-relaxed">Join thousands of gamers and connect with the community.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-8 py-16 max-w-4xl mx-auto">
+    <div class="bg-white/[0.04] border border-white/10 rounded-3xl p-12 text-center">
+      <h2 data-i18n="cta-title" class="text-4xl font-black mb-4">Ready to <span class="text-[#00c8e0]">Join?</span></h2>
+      <p data-i18n="cta-desc" class="text-white/50 mb-8">Create your free account and get instant access to everything Nexoria Hub has to offer.</p>
+      <a href="login.html" data-i18n="cta-btn" class="bg-[#00c8e0] text-black font-semibold text-sm px-10 py-3 rounded-lg hover:bg-[#00b3c9] transition glow-btn inline-block">Get Started Free</a>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 px-10 py-6 flex items-center justify-between text-white/30 text-xs">
+    <span data-i18n="footer-rights">© 2024 Nexoria Hub. All rights reserved.</span>
+    <span class="text-[#00c8e0]/50">NXH</span>
+  </footer>
+
+  <script src="lang.js"></script>
+
+  <script>
+    function animateCounter(id, target, suffix = '') {
+      let current = 0;
+      const duration = 2000;
+      const step = target / (duration / 16);
+      const el = document.getElementById(id);
+      if(!el) return;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        el.textContent = Math.floor(current).toLocaleString() + suffix;
+      }, 16);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter('membersCount', 12000, 'K+');
+          animateCounter('productsCount', 340, '+');
+          animateCounter('uptimeCount', 99, '%');
+          observer.disconnect();
+        }
+      });
+    });
+    if(document.getElementById('membersCount')) observer.observe(document.getElementById('membersCount'));
+  </script>
+</body>
+</html>

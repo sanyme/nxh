@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Store — Nexoria Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+    * { font-family: 'Inter', sans-serif; }
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(0,200,224,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,224,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); }
+    .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); transition: all 0.3s; }
+    .product-card:hover { border-color: rgba(0,200,224,0.4); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .btn-cyan { background: #00c8e0; color: #000; font-weight: 700; transition: all 0.2s; }
+    .btn-cyan:hover { background: #00e5ff; }
+    .badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .filter-btn { border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); transition: all 0.2s; }
+    .filter-btn:hover, .filter-btn.active { border-color: #00c8e0; color: #00c8e0; background: rgba(0,200,224,0.1); }
+    body, * { transition: font-family 0.3s ease; }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen bg-grid">
+
+  <nav class="border-b border-white/10 px-8 py-4 flex items-center justify-between sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md">
+    <a href="index.html" class="border border-[#00c8e0] text-[#00c8e0] font-bold px-3 py-1 rounded text-sm tracking-widest">NXH</a>
+    <div class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-widest text-white/50">
+      <a href="index.html" data-i18n="nav-home" class="hover:text-white transition">HOME</a>
+      <a href="store.html" data-i18n="nav-store" class="text-white border-b-2 border-[#00c8e0] pb-0.5">STORE</a>
+      <a href="community.html" data-i18n="nav-community" class="hover:text-white transition">COMMUNITY</a>
+      <a href="support.html" data-i18n="nav-support" class="hover:text-white transition">SUPPORT</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="langBtn" onclick="toggleLang()" class="border border-white/20 text-white/70 px-3 py-1 rounded-full text-xs font-bold hover:border-[#00c8e0] hover:text-[#00c8e0] transition cursor-pointer">AR</button>
+      <a href="login.html" data-i18n="nav-login" class="btn-cyan px-5 py-2 rounded-full text-sm">Login</a>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-8 py-12">
+    
+    <div class="mb-10">
+      <h1 data-i18n="store-title" class="text-4xl font-black mb-2">The <span class="text-[#00c8e0]">Store</span></h1>
+      <p data-i18n="store-p" class="text-white/40">340+ products for gamers, by gamers</p>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-4 mb-10">
+      <div class="flex-1 relative">
+        <input type="text" placeholder="Search products..." oninput="filterProducts()" id="searchInput"
+          class="w-full bg-white/5 border border-white/10 text-white px-5 py-3 rounded-xl text-sm focus:outline-none focus:border-[#00c8e0] placeholder-white/30"/>
+        <span class="absolute right-4 top-3.5 text-white/30 text-sm">🔍</span>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <button onclick="setFilter('all', this)" class="filter-btn active px-4 py-2 rounded-lg text-sm font-semibold">All</button>
+        <button onclick="setFilter('script', this)" class="filter-btn px-4 py-2 rounded-lg text-sm font-semibold">Scripts</button>
+        <button onclick="setFilter('config', this)" class="filter-btn px-4 py-2 rounded-lg text-sm font-semibold">Configs</button>
+        <button onclick="setFilter('tool', this)" class="filter-btn px-4 py-2 rounded-lg text-sm font-semibold">Tools</button>
+        <button onclick="setFilter('bundle', this)" class="filter-btn px-4 py-2 rounded-lg text-sm font-semibold">Bundles</button>
+      </div>
+    </div>
+
+    <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    </div>
+
+    <div id="noResults" class="hidden text-center py-20 text-white/30">
+      <div class="text-4xl mb-4">🔍</div>
+      <p>No products found</p>
+    </div>
+
+  </div>
+
+  <footer class="border-t border-white/10 px-8 py-6 flex items-center justify-between text-white/40 text-sm mt-12">
+    <span data-i18n="footer-rights">© 2024 Nexoria Hub. All rights reserved.</span>
+    <span class="text-[#00c8e0]/40 font-bold">NXH</span>
+  </footer>
+
+  <script>
+    const products = [
+      { id: 1, name: 'Pro Aim Config', category: 'config', price: 9.99, badge: 'HOT', badgeColor: '#ff4444', emoji: '🎯', desc: 'Advanced aim configuration for FPS games', downloads: 2341 },
+      { id: 2, name: 'Auto Farm Script', category: 'script', price: 14.99, badge: 'NEW', badgeColor: '#00c8e0', emoji: '🤖', desc: 'Automated farming script with anti-ban', downloads: 892 },
+      { id: 3, name: 'FPS Booster Tool', category: 'tool', price: 4.99, badge: null, badgeColor: null, emoji: '⚡', desc: 'Optimize your PC for maximum FPS', downloads: 5621 },
+      { id: 4, name: 'Ultimate Bundle', category: 'bundle', price: 29.99, badge: 'SALE', badgeColor: '#ff8800', emoji: '📦', desc: 'Everything you need — 15 products included', downloads: 431 },
+      { id: 5, name: 'Macro Manager', category: 'tool', price: 7.99, badge: null, badgeColor: null, emoji: '🖱️', desc: 'Create and manage game macros easily', downloads: 1204 },
+      { id: 6, name: 'Anti-Recoil Script', category: 'script', price: 12.99, badge: 'HOT', badgeColor: '#ff4444', emoji: '🔫', desc: 'Perfect recoil control for all weapons', downloads: 3872 },
+      { id: 7, name: 'Skin Changer', category: 'tool', price: 19.99, badge: 'NEW', badgeColor: '#00c8e0', emoji: '🎨', desc: 'Change in-game skins without restrictions', downloads: 654 },
+      { id: 8, name: 'Pro Config Pack', category: 'config', price: 24.99, badge: 'SALE', badgeColor: '#ff8800', emoji: '⚙️', desc: 'Pro player configurations — all games', downloads: 1893 },
+    ];
+
+    let currentFilter = 'all';
+
+    function renderProducts(list) {
+      const grid = document.getElementById('productsGrid');
+      const noResults = document.getElementById('noResults');
+      
+      if (list.length === 0) {
+        grid.innerHTML = '';
+        noResults.classList.remove('hidden');
+        return;
+      }
+      
+      noResults.classList.add('hidden');
+      grid.innerHTML = list.map(p => `
+        <div class="product-card rounded-2xl p-6 flex flex-col">
+          <div class="flex items-start justify-between mb-4">
+            <div class="text-4xl">${p.emoji}</div>
+            ${p.badge ? `<span class="badge" style="background: ${p.badgeColor}22; color: ${p.badgeColor}; border: 1px solid ${p.badgeColor}44">${p.badge}</span>` : ''}
+          </div>
+          <h3 class="font-bold text-base mb-1">${p.name}</h3>
+          <p class="text-white/40 text-xs mb-4 flex-1">${p.desc}</p>
+          <div class="text-white/30 text-xs mb-4">📥 ${p.downloads.toLocaleString()} downloads</div>
+          <div class="flex items-center justify-between">
+            <span class="text-[#00c8e0] font-black text-lg">$${p.price}</span>
+            <button onclick="addToCart(${p.id})" class="btn-cyan px-4 py-2 rounded-lg text-xs">Buy Now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setFilter(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterProducts();
+    }
+
+    function filterProducts() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = products.filter(p => {
+        const matchFilter = currentFilter === 'all' || p.category === currentFilter;
+        const matchSearch = p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
+        return matchFilter && matchSearch;
+      });
+      renderProducts(filtered);
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      alert(`Added "${product.name}" to cart!\n(Connect to backend)`);
+    }
+
+    // Initial render
+    renderProducts(products);
+  </script>
+  
+  <script src="lang.js"></script>
+</body>
+</html>
