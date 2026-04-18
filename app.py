@@ -18,7 +18,7 @@ CORS(app, supports_credentials=True, origins=[
 
 # ─── Config ───────────────────────────────────────────────────────────────────
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://127.0.0.1:5501')
-BACKEND_URL  = os.environ.get('BACKEND_URL',  'http://127.0.0.1:5000')
+BACKEND_URL  = os.environ.get('BACKEND_URL',  'https://nxh.vercel.app')
 
 DISCORD_CLIENT_ID     = os.environ.get('DISCORD_CLIENT_ID',  '1491020234109485207')
 DISCORD_CLIENT_SECRET = os.environ.get('DISCORD_SECRET',     '')

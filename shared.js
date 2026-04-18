@@ -1,10 +1,29 @@
 // ═══════════════════════════════════════════════════════════
 //  NEXORIA HUB — Shared JS
-//  Handles: Auth, i18n (AR/EN), Navbar, Profile Dropdown
+//  Auth (Supabase) + i18n + Navbar
 // ═══════════════════════════════════════════════════════════
 
-const BACKEND_URL  = 'https://nxh.vercel.app';
-const FRONTEND_URL = 'https://sanyme.github.io/nxh';
+const FRONTEND_URL  = 'https://sanyme.github.io/nxh';
+const SUPABASE_URL  = 'https://wsxpshknbebzadcupsvk.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_gmSJfdMJ7_tP2svW0CZnKg_ErF_8Shx';
+
+// ─── Supabase Client ──────────────────────────────────────
+let _supabase = null;
+
+async function getSupabase() {
+  if (_supabase) return _supabase;
+  const { createClient } = await import(
+    'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+  );
+  _supabase = createClient(SUPABASE_URL, SUPABASE_ANON, {
+    auth: {
+      persistSession:     true,
+      autoRefreshToken:   true,
+      detectSessionInUrl: true,
+    }
+  });
+  return _supabase;
+}
 
 // ─── Translations ─────────────────────────────────────────
 const translations = {
@@ -15,7 +34,6 @@ const translations = {
     nav_support:   'SUPPORT',
     nav_login:     'Login',
     nav_profile:   'Profile',
-    nav_settings:  'Settings',
     nav_logout:    'Logout',
 
     hero_badge:        'GAMING HUB — EST. 2024',
@@ -85,25 +103,25 @@ const translations = {
     buy_now:        'Buy Now',
     downloads:      'downloads',
 
-    community_title:   'Community',
-    community_accent:  'Hub',
-    community_desc:    '12,000+ members — share, discuss, grow',
-    new_post:          '+ New Post',
-    tab_all:           'All',
-    tab_general:       'General',
-    tab_showcase:      'Showcase',
-    tab_help:          'Help',
-    post_likes:        'likes',
-    post_replies:      'replies',
-    post_share:        'Share',
-    modal_create:      'Create Post',
-    modal_title_ph:    'Post title...',
-    modal_content_ph:  "What's on your mind?",
-    modal_post:        'Post',
-    modal_cancel:      'Cancel',
-    cat_general:       '📢 General',
-    cat_showcase:      '🏆 Showcase',
-    cat_help:          '❓ Help',
+    community_title:  'Community',
+    community_accent: 'Hub',
+    community_desc:   '12,000+ members — share, discuss, grow',
+    new_post:         '+ New Post',
+    tab_all:          'All',
+    tab_general:      'General',
+    tab_showcase:     'Showcase',
+    tab_help:         'Help',
+    post_likes:       'likes',
+    post_replies:     'replies',
+    post_share:       'Share',
+    modal_create:     'Create Post',
+    modal_title_ph:   'Post title...',
+    modal_content_ph: "What's on your mind?",
+    modal_post:       'Post',
+    modal_cancel:     'Cancel',
+    cat_general:      '📢 General',
+    cat_showcase:     '🏆 Showcase',
+    cat_help:         '❓ Help',
 
     support_title:       'How can we',
     support_accent:      'help?',
@@ -132,7 +150,6 @@ const translations = {
     ticket_submit:       'Submit Ticket',
 
     profile_title:        'My Profile',
-    profile_accent:       'Settings',
     profile_username:     'USERNAME',
     profile_name:         'DISPLAY NAME',
     profile_email:        'EMAIL',
@@ -154,7 +171,6 @@ const translations = {
     nav_support:   'الدعم',
     nav_login:     'تسجيل الدخول',
     nav_profile:   'الملف الشخصي',
-    nav_settings:  'الإعدادات',
     nav_logout:    'تسجيل الخروج',
 
     hero_badge:        'مركز الألعاب — تأسس 2024',
@@ -224,25 +240,25 @@ const translations = {
     buy_now:        'اشتري الآن',
     downloads:      'تحميل',
 
-    community_title:   'مجتمع',
-    community_accent:  'هاب',
-    community_desc:    '+12,000 عضو — شارك، ناقش، انمو',
-    new_post:          '+ منشور جديد',
-    tab_all:           'الكل',
-    tab_general:       'عام',
-    tab_showcase:      'معرض',
-    tab_help:          'مساعدة',
-    post_likes:        'إعجاب',
-    post_replies:      'رد',
-    post_share:        'مشاركة',
-    modal_create:      'إنشاء منشور',
-    modal_title_ph:    'عنوان المنشور...',
-    modal_content_ph:  'ماذا يدور في ذهنك؟',
-    modal_post:        'نشر',
-    modal_cancel:      'إلغاء',
-    cat_general:       '📢 عام',
-    cat_showcase:      '🏆 معرض',
-    cat_help:          '❓ مساعدة',
+    community_title:  'مجتمع',
+    community_accent: 'هاب',
+    community_desc:   '+12,000 عضو — شارك، ناقش، انمو',
+    new_post:         '+ منشور جديد',
+    tab_all:          'الكل',
+    tab_general:      'عام',
+    tab_showcase:     'معرض',
+    tab_help:         'مساعدة',
+    post_likes:       'إعجاب',
+    post_replies:     'رد',
+    post_share:       'مشاركة',
+    modal_create:     'إنشاء منشور',
+    modal_title_ph:   'عنوان المنشور...',
+    modal_content_ph: 'ماذا يدور في ذهنك؟',
+    modal_post:       'نشر',
+    modal_cancel:     'إلغاء',
+    cat_general:      '📢 عام',
+    cat_showcase:     '🏆 معرض',
+    cat_help:         '❓ مساعدة',
 
     support_title:       'كيف يمكننا',
     support_accent:      'مساعدتك؟',
@@ -270,8 +286,7 @@ const translations = {
     ticket_subject:      'موضوع التذكرة',
     ticket_submit:       'إرسال التذكرة',
 
-    profile_title:        'ملفي',
-    profile_accent:       'الشخصي',
+    profile_title:        'ملفي الشخصي',
     profile_username:     'اسم المستخدم',
     profile_name:         'الاسم المعروض',
     profile_email:        'البريد الإلكتروني',
@@ -287,162 +302,147 @@ const translations = {
   }
 };
 
-// ─── Auth ─────────────────────────────────────────────────
+// ─── Auth ──────────────────────────────────────────────────
 const Auth = {
-  getUser() {
-    try { return JSON.parse(localStorage.getItem('nxh_user')) || null; }
-    catch { return null; }
+
+  async getSession() {
+    const sb = await getSupabase();
+    const { data } = await sb.auth.getSession();
+    return data?.session || null;
   },
 
-  setUser(user) {
-    localStorage.setItem('nxh_user', JSON.stringify(user));
+  async getUser() {
+    const sb = await getSupabase();
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) return null;
+    const meta = user.user_metadata || {};
+    return {
+      id:       user.id,
+      email:    user.email,
+      username: meta.username
+                || meta.user_name
+                || meta.full_name
+                || meta.name
+                || user.email?.split('@')[0]
+                || 'User',
+      name:     meta.full_name || meta.name || '',
+      avatar:   meta.avatar_url || meta.picture || '',
+      provider: user.app_metadata?.provider || 'email',
+      joined:   user.created_at,
+    };
   },
 
-  logout() {
-    localStorage.removeItem('nxh_user');
-    fetch(`${BACKEND_URL}/api/logout`, {
-      method:      'POST',
-      credentials: 'include'
-    }).finally(() => {
-      window.location.href = `${FRONTEND_URL}/index.html`;
+  async isLoggedIn() {
+    const session = await this.getSession();
+    return !!session;
+  },
+
+  async loginWithDiscord() {
+    const sb = await getSupabase();
+    await sb.auth.signInWithOAuth({
+      provider: 'discord',
+      options: { redirectTo: `${FRONTEND_URL}/index.html` }
     });
   },
 
-  // ✅ يقرأ URL Params بعد OAuth redirect
-  parseOAuthCallback() {
-    const params = new URLSearchParams(window.location.search);
-
-    if (params.get('login') === 'success') {
-      const user = {
-        username: params.get('username') || 'User',
-        name:     params.get('name')     || params.get('username') || 'User',
-        avatar:   params.get('avatar')   || '',
-        email:    params.get('email')    || '',
-        provider: params.get('provider') || 'oauth',
-        joined:   params.get('joined')   || new Date().toISOString(),
-      };
-      this.setUser(user);
-      window.history.replaceState({}, document.title, window.location.pathname);
-      return user;
-    }
-
-    // لو في error من الـ OAuth
-    if (params.get('error')) {
-      const errors = {
-        'discord_cancelled':    'Discord login was cancelled.',
-        'github_cancelled':     'GitHub login was cancelled.',
-        'google_cancelled':     'Google login was cancelled.',
-        'discord_token_failed': 'Discord login failed. Try again.',
-        'github_token_failed':  'GitHub login failed. Try again.',
-        'google_token_failed':  'Google login failed. Try again.',
-        'discord_error':        'Discord login error. Try again.',
-        'github_error':         'GitHub login error. Try again.',
-        'google_error':         'Google login error. Try again.',
-      };
-      const msg = errors[params.get('error')] || 'Login failed. Please try again.';
-      window.history.replaceState({}, document.title, window.location.pathname);
-      setTimeout(() => showAuthError(msg), 300);
-    }
-
-    return null;
+  async loginWithGoogle() {
+    const sb = await getSupabase();
+    await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${FRONTEND_URL}/index.html` }
+    });
   },
 
-  // ✅ Email Login
+  async loginWithGithub() {
+    const sb = await getSupabase();
+    await sb.auth.signInWithOAuth({
+      provider: 'github',
+      options: { redirectTo: `${FRONTEND_URL}/index.html` }
+    });
+  },
+
   async loginWithEmail(email, password) {
-    try {
-      const res  = await fetch(`${BACKEND_URL}/api/login`, {
-        method:      'POST',
-        credentials: 'include',
-        headers:     { 'Content-Type': 'application/json' },
-        body:        JSON.stringify({ email, password })
-      });
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        this.setUser(data.user);
-        window.location.href = `${FRONTEND_URL}/index.html`;
-        return { success: true };
-      }
-      return { success: false, error: data.error || 'Login failed' };
-    } catch (e) {
-      console.error(e);
-      return { success: false, error: 'Cannot connect to server. Make sure app.py is running.' };
-    }
+    const sb = await getSupabase();
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) return { success: false, error: error.message };
+    return { success: true, user: data.user };
   },
 
-  // ✅ Email Register
   async registerWithEmail(username, email, password) {
-    try {
-      const res  = await fetch(`${BACKEND_URL}/api/register`, {
-        method:      'POST',
-        credentials: 'include',
-        headers:     { 'Content-Type': 'application/json' },
-        body:        JSON.stringify({ username, email, password })
-      });
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        this.setUser(data.user);
-        window.location.href = `${FRONTEND_URL}/index.html`;
-        return { success: true };
+    const sb = await getSupabase();
+    const { data, error } = await sb.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { username, full_name: username },
+        emailRedirectTo: `${FRONTEND_URL}/index.html`
       }
-      return { success: false, error: data.error || 'Registration failed' };
-    } catch (e) {
-      console.error(e);
-      return { success: false, error: 'Cannot connect to server. Make sure app.py is running.' };
-    }
+    });
+    if (error) return { success: false, error: error.message };
+    return {
+      success:      true,
+      needsConfirm: !data.session,
+      user:         data.user
+    };
   },
 
-  isLoggedIn() {
-    return this.getUser() !== null;
+  async logout() {
+    const sb = await getSupabase();
+    await sb.auth.signOut();
+    window.location.href = `${FRONTEND_URL}/index.html`;
+  },
+
+  async updateProfile(updates) {
+    const sb = await getSupabase();
+    const { error } = await sb.auth.updateUser({ data: updates });
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  },
+
+  async resetPassword(email) {
+    const sb = await getSupabase();
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: `${FRONTEND_URL}/login.html`
+    });
+    if (error) return { success: false, error: error.message };
+    return { success: true };
   }
 };
 
-// ─── Auth Error ────────────────────────────────────────────
+// ─── UI Helpers ────────────────────────────────────────────
 function showAuthError(msg) {
   const existing = document.getElementById('authErrorBanner');
   if (existing) existing.remove();
-
   const div = document.createElement('div');
   div.id = 'authErrorBanner';
   div.style.cssText = `
-    position: fixed; top: 80px; left: 50%;
-    transform: translateX(-50%);
-    background: #1a0808;
-    border: 1px solid rgba(255,80,80,0.4);
-    color: #ff8080;
-    padding: 12px 24px;
-    border-radius: 12px;
-    font-size: 14px;
-    z-index: 9999;
-    white-space: nowrap;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    position:fixed; top:80px; left:50%; transform:translateX(-50%);
+    background:#1a0808; border:1px solid rgba(255,80,80,0.4);
+    color:#ff8080; padding:12px 24px; border-radius:12px;
+    font-size:14px; z-index:9999; white-space:nowrap;
+    box-shadow:0 8px 32px rgba(0,0,0,0.5);
   `;
   div.textContent = '⚠️  ' + msg;
   document.body.appendChild(div);
   setTimeout(() => div?.remove(), 5000);
 }
 
-// ─── Toast ─────────────────────────────────────────────────
 function showToast(msg, type = 'success') {
   const existing = document.querySelector('.nxh-toast');
   if (existing) existing.remove();
-
   const toast = document.createElement('div');
   toast.className = 'nxh-toast';
+  const isRTL = document.documentElement.dir === 'rtl';
   toast.style.cssText = `
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: #111;
-    border: 1px solid ${type === 'success' ? 'rgba(0,200,224,0.3)' : 'rgba(255,80,80,0.3)'};
-    color: ${type === 'success' ? '#00c8e0' : '#ff8080'};
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 14px;
-    z-index: 9999;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    animation: slideIn 0.3s ease-out;
+    position:fixed; bottom:24px;
+    ${isRTL ? 'left:24px' : 'right:24px'};
+    background:#111;
+    border:1px solid ${type === 'success'
+      ? 'rgba(0,200,224,0.3)'
+      : 'rgba(255,80,80,0.3)'};
+    color:${type === 'success' ? '#00c8e0' : '#ff8080'};
+    padding:12px 20px; border-radius:12px; font-size:14px;
+    z-index:9999; box-shadow:0 8px 32px rgba(0,0,0,0.4);
   `;
   toast.textContent = msg;
   document.body.appendChild(toast);
@@ -510,12 +510,12 @@ const Navbar = {
     return 'home';
   },
 
-  build() {
+  async build() {
     const nav = document.getElementById('mainNav');
     if (!nav) return;
 
     const active = this.getActivePage();
-    const user   = Auth.getUser();
+    const user   = await Auth.getUser();
 
     const links = this.pages.map(p => `
       <a href="${p.href}"
@@ -531,9 +531,7 @@ const Navbar = {
     nav.innerHTML = `
       <a href="${FRONTEND_URL}/index.html"
          class="border border-[#00c8e0] text-[#00c8e0] font-bold
-                px-3 py-1 rounded text-sm tracking-widest flex-shrink-0">
-        NXH
-      </a>
+                px-3 py-1 rounded text-sm tracking-widest flex-shrink-0">NXH</a>
 
       <div class="hidden md:flex items-center gap-8">${links}</div>
 
@@ -556,14 +554,15 @@ const Navbar = {
       </div>
     `;
 
-    // Mobile menu links
     const mobileMenu = document.getElementById('mobileMenu');
     if (mobileMenu) {
       mobileMenu.innerHTML = this.pages.map(p => `
         <a href="${p.href}"
            class="block py-3 px-6 text-sm font-semibold tracking-widest
                   border-b border-white/5
-                  ${active === p.id ? 'text-[#00c8e0]' : 'text-white/50 hover:text-white'}"
+                  ${active === p.id
+                    ? 'text-[#00c8e0]'
+                    : 'text-white/50 hover:text-white'}"
            data-i18n="${p.key}">${i18n.t(p.key)}</a>
       `).join('');
     }
@@ -581,26 +580,29 @@ const Navbar = {
   },
 
   buildUserMenu(user) {
-    const initials = user.username
-      ? user.username.charAt(0).toUpperCase()
-      : '?';
+    const initials = (user.username || '?').charAt(0).toUpperCase();
+    const providerColors = {
+      discord: '#5865F2',
+      google:  '#4285F4',
+      github:  '#aaaaaa',
+      email:   '#00c8e0',
+    };
+    const pc = providerColors[user.provider] || '#00c8e0';
 
     const avatarHTML = user.avatar
-      ? `
-        <img src="${user.avatar}"
-             class="w-8 h-8 rounded-full object-cover border-2 border-[#00c8e0]/50"
-             onerror="this.style.display='none';
-                      document.getElementById('navAvatarFallback').style.display='flex'"/>
-        <div id="navAvatarFallback"
-             class="w-8 h-8 rounded-full bg-[#00c8e0]/20 border border-[#00c8e0]/50
-                    items-center justify-center text-[#00c8e0] font-bold text-xs hidden">
-          ${initials}
-        </div>`
-      : `
-        <div class="w-8 h-8 rounded-full bg-[#00c8e0]/20 border border-[#00c8e0]/50
+      ? `<img src="${user.avatar}"
+              class="w-8 h-8 rounded-full object-cover border-2 border-[#00c8e0]/50"
+              onerror="this.style.display='none';
+                       document.getElementById('navFallback').style.display='flex'"/>
+         <div id="navFallback" style="display:none"
+              class="w-8 h-8 rounded-full bg-[#00c8e0]/20 border border-[#00c8e0]/50
+                     flex items-center justify-center text-[#00c8e0] font-bold text-xs">
+           ${initials}
+         </div>`
+      : `<div class="w-8 h-8 rounded-full bg-[#00c8e0]/20 border border-[#00c8e0]/50
                     flex items-center justify-center text-[#00c8e0] font-bold text-xs">
-          ${initials}
-        </div>`;
+           ${initials}
+         </div>`;
 
     return `
       <div class="relative" id="userMenuWrapper">
@@ -611,7 +613,8 @@ const Navbar = {
             ${user.username}
           </span>
           <svg width="12" height="12" fill="none" stroke="currentColor"
-               stroke-width="2.5" viewBox="0 0 24 24" class="text-white/50 flex-shrink-0">
+               stroke-width="2.5" viewBox="0 0 24 24"
+               class="text-white/50 flex-shrink-0">
             <path d="M6 9l6 6 6-6"/>
           </svg>
         </button>
@@ -619,19 +622,16 @@ const Navbar = {
         <div id="userDropdown"
              class="hidden absolute right-0 top-12 w-56 rounded-xl
                     border border-white/10 bg-[#111] shadow-2xl overflow-hidden z-50">
-          <!-- User Info -->
           <div class="px-4 py-3 border-b border-white/10">
             <div class="font-bold text-sm truncate">${user.username}</div>
-            <div class="text-white/40 text-xs truncate">${user.email || user.provider || ''}</div>
-            <div class="mt-1">
-              <span class="text-xs px-2 py-0.5 rounded-full capitalize"
-                    style="background:rgba(0,200,224,0.1);color:#00c8e0">
-                ${user.provider || 'oauth'}
-              </span>
-            </div>
+            <div class="text-white/40 text-xs truncate mt-0.5">${user.email || ''}</div>
+            <span class="text-xs px-2 py-0.5 rounded-full capitalize mt-1
+                         inline-block font-semibold"
+                  style="background:${pc}22; color:${pc}">
+              ${user.provider || 'email'}
+            </span>
           </div>
 
-          <!-- Links -->
           <a href="${FRONTEND_URL}/profile.html"
              class="flex items-center gap-3 px-4 py-3 text-sm text-white/70
                     hover:text-white hover:bg-white/5 transition">
@@ -639,10 +639,10 @@ const Navbar = {
             <span data-i18n="nav_profile">${i18n.t('nav_profile')}</span>
           </a>
 
-          <!-- Logout -->
           <button onclick="Auth.logout()"
                   class="w-full flex items-center gap-3 px-4 py-3 text-sm
-                         text-red-400 hover:bg-red-500/10 transition border-t border-white/5">
+                         text-red-400 hover:bg-red-500/10 transition
+                         border-t border-white/5">
             <span>🚪</span>
             <span data-i18n="nav_logout">${i18n.t('nav_logout')}</span>
           </button>
@@ -652,8 +652,8 @@ const Navbar = {
   },
 
   toggleDropdown() {
-    const dropdown = document.getElementById('userDropdown');
-    if (dropdown) dropdown.classList.toggle('hidden');
+    const d = document.getElementById('userDropdown');
+    if (d) d.classList.toggle('hidden');
   },
 
   bindDropdown() {
@@ -667,24 +667,15 @@ const Navbar = {
   }
 };
 
-// ─── Mobile Menu ───────────────────────────────────────────
 function toggleMobileMenu() {
   const menu = document.getElementById('mobileMenu');
   if (menu) menu.classList.toggle('hidden');
 }
 
 // ─── Init ──────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  // 1. Check OAuth callback first
-  Auth.parseOAuthCallback();
-
-  // 2. Apply language
+document.addEventListener('DOMContentLoaded', async () => {
   document.documentElement.lang = i18n.current;
   document.documentElement.dir  = i18n.current === 'ar' ? 'rtl' : 'ltr';
-
-  // 3. Build navbar
-  Navbar.build();
-
-  // 4. Apply translations
+  await Navbar.build();
   i18n.applyTranslations();
 });
