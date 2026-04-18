@@ -27,11 +27,26 @@
       border: 1px solid rgba(255,255,255,0.1);
       color: white;
       transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
     }
     .social-btn:hover {
       background: rgba(255,255,255,0.08);
       border-color: rgba(255,255,255,0.25);
       transform: translateY(-1px);
+    }
+    .social-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
     .input-field {
       background: rgba(255,255,255,0.05);
@@ -39,6 +54,9 @@
       color: white;
       transition: all 0.2s;
       width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
     }
     .input-field:focus {
       outline: none;
@@ -52,6 +70,11 @@
       font-weight: 700;
       transition: all 0.2s;
       width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
     }
     .btn-cyan:hover {
       background: #00e5ff;
@@ -76,6 +99,17 @@
     }
     .tab-active   { color: white; border-bottom: 2px solid #00c8e0; }
     .tab-inactive { color: rgba(255,255,255,0.4); border-bottom: 2px solid transparent; }
+
+    .success-msg {
+      background: rgba(0,200,224,0.1);
+      border: 1px solid rgba(0,200,224,0.3);
+      color: #00c8e0;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
 
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -103,6 +137,9 @@
                      px-5 py-2 rounded-lg text-lg tracking-widest">NXH</span>
       </div>
 
+      <!-- Success Message -->
+      <div id="successMsg" class="success-msg hidden"></div>
+
       <!-- Tabs -->
       <div class="flex mb-8 border-b border-white/10">
         <button onclick="switchTab('login')" id="tab-login"
@@ -120,19 +157,19 @@
         <p class="text-white/40 text-sm text-center mb-8"
            data-i18n="login_sub">Sign in to your Nexoria Hub account</p>
 
-        <!-- OAuth -->
+        <!-- ✅ OAuth Buttons — Supabase -->
         <div class="flex flex-col gap-3 mb-6">
 
-          <a href="http://127.0.0.1:5000/login/discord"
-             class="social-btn flex items-center gap-3 px-5 py-3 rounded-xl font-semibold text-sm">
+          <!-- Discord -->
+          <button onclick="handleDiscord(this)" class="social-btn">
             <svg width="20" height="20" viewBox="0 0 71 55" fill="none">
               <path d="M60.1 4.9C55.5 2.7 50.6 1.1 45.5.2c-.5.9-1.1 2.2-1.5 3.2-5.4-.8-10.8-.8-16.2 0-.4-1-1-2.3-1.5-3.2C21.2 1.1 16.3 2.7 11.7 4.9 1.7 19.4-1 33.5.3 47.4c5.8 4.2 11.4 6.8 16.9 8.5 1.4-1.9 2.6-3.9 3.6-6-2-.7-3.9-1.7-5.7-2.8.5-.3.9-.7 1.4-1 11.7 5.4 24.3 5.4 35.9 0 .5.4.9.7 1.4 1-1.8 1.1-3.7 2.1-5.7 2.8 1 2.1 2.2 4.1 3.6 6 5.5-1.7 11.1-4.3 16.9-8.5 1.4-16-2.4-30-10.5-43.5zM23.7 38.8c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.5 0 6.4 3.2 6.4 7.1s-2.9 7.1-6.4 7.1zm23.6 0c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.5 0 6.4 3.2 6.4 7.1s-2.9 7.1-6.4 7.1z" fill="#5865F2"/>
             </svg>
             <span data-i18n="login_discord">Continue with Discord</span>
-          </a>
+          </button>
 
-          <a href="http://127.0.0.1:5000/login/google"
-             class="social-btn flex items-center gap-3 px-5 py-3 rounded-xl font-semibold text-sm">
+          <!-- Google -->
+          <button onclick="handleGoogle(this)" class="social-btn">
             <svg width="20" height="20" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -140,15 +177,15 @@
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
             <span data-i18n="login_google">Continue with Google</span>
-          </a>
+          </button>
 
-          <a href="http://127.0.0.1:5000/login/github"
-             class="social-btn flex items-center gap-3 px-5 py-3 rounded-xl font-semibold text-sm">
+          <!-- GitHub -->
+          <button onclick="handleGithub(this)" class="social-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
             </svg>
             <span data-i18n="login_github">Continue with GitHub</span>
-          </a>
+          </button>
 
         </div>
 
@@ -156,23 +193,23 @@
           <span data-i18n="login_or">OR</span>
         </div>
 
-        <!-- Email Form -->
+        <!-- Email Login Form -->
         <form id="loginForm" onsubmit="handleLogin(event)" class="flex flex-col gap-4">
           <input type="email" id="loginEmail"
                  data-i18n="login_email"
                  placeholder="Email address"
-                 class="input-field px-4 py-3 rounded-xl text-sm" required/>
+                 class="input-field" required/>
           <input type="password" id="loginPassword"
                  data-i18n="login_pass"
                  placeholder="Password"
-                 class="input-field px-4 py-3 rounded-xl text-sm" required/>
-          <button type="submit" id="loginBtn"
-                  class="btn-cyan px-4 py-3 rounded-xl text-sm mt-1"
+                 class="input-field" required/>
+          <button type="submit" id="loginBtn" class="btn-cyan mt-1"
                   data-i18n="login_btn">Sign In</button>
         </form>
 
         <div class="mt-6 flex items-center justify-between text-sm text-white/40">
-          <a href="#" class="hover:text-white transition"
+          <a href="#" onclick="handleForgotPassword(event)"
+             class="hover:text-white transition"
              data-i18n="login_forgot">Forgot password?</a>
           <span>
             <span data-i18n="login_no_account">No account?</span>
@@ -194,21 +231,20 @@
           <input type="text" id="regUsername"
                  data-i18n="register_username"
                  placeholder="Username"
-                 class="input-field px-4 py-3 rounded-xl text-sm" required/>
+                 class="input-field" required/>
           <input type="email" id="regEmail"
                  data-i18n="register_email"
                  placeholder="Email address"
-                 class="input-field px-4 py-3 rounded-xl text-sm" required/>
+                 class="input-field" required/>
           <input type="password" id="regPassword"
                  data-i18n="register_pass"
                  placeholder="Password"
-                 class="input-field px-4 py-3 rounded-xl text-sm" required/>
+                 class="input-field" required/>
           <input type="password" id="regConfirm"
                  data-i18n="register_confirm"
                  placeholder="Confirm Password"
-                 class="input-field px-4 py-3 rounded-xl text-sm" required/>
-          <button type="submit" id="registerBtn"
-                  class="btn-cyan px-4 py-3 rounded-xl text-sm mt-1"
+                 class="input-field" required/>
+          <button type="submit" id="registerBtn" class="btn-cyan mt-1"
                   data-i18n="register_btn">Create Account</button>
         </form>
 
@@ -232,13 +268,14 @@
 
   <script src="shared.js"></script>
   <script>
-    // Redirect if already logged in
-    document.addEventListener('DOMContentLoaded', () => {
-      if (Auth.isLoggedIn()) {
+    // ─── Init ─────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (await Auth.isLoggedIn()) {
         window.location.href = `${FRONTEND_URL}/index.html`;
       }
     });
 
+    // ─── Tab Switch ───────────────────────────────────────
     function switchTab(tab) {
       const isLogin = tab === 'login';
       document.getElementById('form-login').classList.toggle('hidden', !isLogin);
@@ -247,9 +284,35 @@
         `flex-1 pb-3 text-sm font-bold tracking-wide transition ${isLogin ? 'tab-active' : 'tab-inactive'}`;
       document.getElementById('tab-register').className =
         `flex-1 pb-3 text-sm font-bold tracking-wide transition ${!isLogin ? 'tab-active' : 'tab-inactive'}`;
+      document.getElementById('successMsg').classList.add('hidden');
     }
 
-    // ✅ Email Login
+    function showSuccess(msg) {
+      const el = document.getElementById('successMsg');
+      el.textContent = msg;
+      el.classList.remove('hidden');
+    }
+
+    // ─── OAuth ────────────────────────────────────────────
+    async function handleDiscord(btn) {
+      btn.disabled = true;
+      btn.querySelector('span[data-i18n]').textContent = '...';
+      await Auth.loginWithDiscord();
+    }
+
+    async function handleGoogle(btn) {
+      btn.disabled = true;
+      btn.querySelector('span[data-i18n]').textContent = '...';
+      await Auth.loginWithGoogle();
+    }
+
+    async function handleGithub(btn) {
+      btn.disabled = true;
+      btn.querySelector('span[data-i18n]').textContent = '...';
+      await Auth.loginWithGithub();
+    }
+
+    // ─── Email Login ──────────────────────────────────────
     async function handleLogin(e) {
       e.preventDefault();
       const btn   = document.getElementById('loginBtn');
@@ -261,14 +324,16 @@
 
       const result = await Auth.loginWithEmail(email, pass);
 
-      if (!result.success) {
+      if (result.success) {
+        window.location.href = `${FRONTEND_URL}/index.html`;
+      } else {
         showAuthError(result.error);
         btn.textContent = i18n.t('login_btn');
         btn.disabled    = false;
       }
     }
 
-    // ✅ Email Register
+    // ─── Email Register ───────────────────────────────────
     async function handleRegister(e) {
       e.preventDefault();
       const btn      = document.getElementById('registerBtn');
@@ -277,28 +342,45 @@
       const pass     = document.getElementById('regPassword').value;
       const confirm  = document.getElementById('regConfirm').value;
 
-      if (pass !== confirm) {
-        showAuthError('Passwords do not match!');
-        return;
-      }
-      if (pass.length < 6) {
-        showAuthError('Password must be at least 6 characters!');
-        return;
-      }
-      if (username.length < 3) {
-        showAuthError('Username must be at least 3 characters!');
-        return;
-      }
+      if (pass !== confirm)    { showAuthError('Passwords do not match!'); return; }
+      if (pass.length < 6)     { showAuthError('Password must be at least 6 characters!'); return; }
+      if (username.length < 3) { showAuthError('Username must be at least 3 characters!'); return; }
 
       btn.textContent = '...';
       btn.disabled    = true;
 
       const result = await Auth.registerWithEmail(username, email, pass);
 
-      if (!result.success) {
+      if (result.success) {
+        if (result.needsConfirm) {
+          showSuccess('✅ Check your email to confirm your account!');
+          document.getElementById('registerForm').style.opacity = '0.5';
+          document.getElementById('registerForm').style.pointerEvents = 'none';
+        } else {
+          window.location.href = `${FRONTEND_URL}/index.html`;
+        }
+      } else {
         showAuthError(result.error);
         btn.textContent = i18n.t('register_btn');
         btn.disabled    = false;
+      }
+    }
+
+    // ─── Forgot Password ──────────────────────────────────
+    async function handleForgotPassword(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+
+      if (!email) {
+        showAuthError('Enter your email first!');
+        return;
+      }
+
+      const result = await Auth.resetPassword(email);
+      if (result.success) {
+        showSuccess('✅ Reset link sent! Check your email.');
+      } else {
+        showAuthError(result.error);
       }
     }
   </script>
